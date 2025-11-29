@@ -2,8 +2,114 @@
 <html>
   <head>
     <title>Jinwoo Jeong</title>
+    <style>
+      html {
+        font-family: sans-serif;
+        color: white;
+        background-color: #1D1D1D;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      #content {
+        margin: 10rem 0 10rem 1.5rem;
+      }
+
+      @media (min-width: 800px) {
+        #content {
+          margin: 10rem 0 10rem 10rem;
+        }
+      }
+
+      li + li {
+        margin-top: 0.5rem;
+      }
+      
+      #greeting {
+        display: block;
+        width: fit-content;
+        position: relative;
+        margin-bottom: 4rem;
+      }
+
+      #greeting-text {
+        display: block;
+        z-index: 1;
+        text-shadow: 0px 2px 8px #3D3D3D;
+      }
+
+      #underline {
+        width: 98%;
+        height: 5px;
+        transform: perspective(11rem) rotateZ(-3deg) rotateY(25deg) skew(-30deg);
+        background-color: #BCA2F2;
+        z-index: -1;
+        position: absolute;
+        left: 3.5rem;
+        bottom: -0.4rem;
+      }
+    </style>
   </head>
   <body>
-    Under construction
+    <section id="content">
+      <h1 id="greeting">
+        <span id="greeting-text">Hi, I'm Jinwoo Jeong.</span>
+        <div id="underline"></div>
+      </h1>
+      
+      <section>
+        <h2>Interests</h2>
+        <ul>
+          <li>Web technology</li>
+          <li>Productivity tools</li>
+          <li>Apple Inc.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Work</h2>
+        <ul>
+          <li>Viva Republica (2021~)</li>
+          <li>Channel Corp. (2019~2021)</li>
+          <li>CLASSUM (2018~2019)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+        <ul>
+          <li>Microsoft Student Partner (2017~2018)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <ul>
+          <li>KAIST - School of Computing, BS</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Links & Contact</h2>
+        <ul>
+          <li>Blog: <a href="https://leo.works">https://leo.works</a></li>
+          <li>Email: <a href="mailto:hi@leo.works">hi@leo.works</a></li>
+        </ul>
+      </section>
+    </section>
   </body>
 </html>
