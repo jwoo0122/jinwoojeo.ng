@@ -1,20 +1,25 @@
-<div id="utterances-container"></div>
+<!-- <div id="utterances-container"></div> -->
+<div id="comment-container">
+  <script src="https://giscus.app/client.js"
+          data-repo="jwoo0122/leo.works"
+          data-repo-id="MDEwOlJlcG9zaXRvcnkyMjg2MDUwNDM="
+          data-category="Announcements"
+          data-category-id="DIC_kwDODaA8c84C2d2j"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
 
-<script>
-  const script = document.createElement("script");
-  const container = document.querySelector("#utterances-container"); // your id in your html above
-
-  // Replace the value of each key with yours
-  Object.entries({
-    src: "https://utteranc.es/client.js",
-    repo: "jwoo0122/leo.works",
-    "issue-term": "pathname",
-    label: "comment", // omit this line, if you don't need label
-    theme: "preferred-color-scheme",
-    crossorigin: "anonymous",
-  }).forEach(([key, value]) => {
-    script.setAttribute(key, value);
-  });
-
-  container?.appendChild(script);
-</script>
+<style>
+  #comment-container {
+    margin-top: 2rem;
+  }
+</style>
