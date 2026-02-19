@@ -4,6 +4,7 @@ import { join } from 'path'
 import matter from 'gray-matter'
 import { TID } from '@atproto/common'
 import process from 'process'
+import console from 'console'
 
 const agent = new AtpAgent({ service: 'https://pds.jinwoojeo.ng' })
 
