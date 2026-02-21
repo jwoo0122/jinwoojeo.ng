@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
@@ -9,8 +8,6 @@ import { getReadingTime } from "../../lib/readingTime";
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-
-const iconStyle = "text-2xl flex items-center justify-center";
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
