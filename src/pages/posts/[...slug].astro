@@ -1,13 +1,13 @@
 ---
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-import { getHeroImages } from "../lib/getHeroImages";
-import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
-import Utterance from "../components/Utterance.astro";
-import { getReadingTime } from "../lib/readingTime";
-import Prose from "../components/forMdx/Prose.astro";
-import Header from "../components/Header.astro";
+// import { getHeroImages } from "../../lib/getHeroImages";
+import Layout from "../../layouts/Layout.astro";
+// import { Image } from "astro:assets";
+import Utterance from "../../components/Utterance.astro";
+import { getReadingTime } from "../../lib/readingTime";
+import Prose from "../../components/forMdx/Prose.astro";
+// import Header from "../../components/Header.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -25,27 +25,16 @@ const {
   body,
   slug,
 } = post;
-const heroImagePath = getHeroImages(heroImage || "");
+// const heroImagePath = getHeroImages(heroImage || "");
 const { Content } = await post.render();
 const readingTime = getReadingTime(body);
 ---
 
 <Layout title={title} description={description} heroImage={heroImage}>
-  <Header />
-  {
-    heroImagePath != null && (
-      <Image
-        src={heroImagePath}
-        alt={""}
-        class="max-h-64 w-full object-cover object-center"
-        quality="mid"
-      />
-    )
-  }
-  <h1 class="mt-10 text-4xl font-bold" transition:name={`post-title-${slug}`}>
+  <h1 class="font-bold" transition:name={`post-title-${slug}`}>
     {title}
   </h1>
-  <div class="mt-2 text-sm text-neutral-500">
+  <div class="text-neutral-500">
     <time
       >{
         pubDate.toLocaleDateString("ko-KR", {

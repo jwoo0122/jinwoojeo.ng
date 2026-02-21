@@ -9,13 +9,10 @@
 @tailwind utilities;
 
 @layer base {
+
   h1,
   h2,
   h3 {
     scroll-margin-top: 30px;
   }
-}
-
-@view-transition {
-  navigation: auto;
 }

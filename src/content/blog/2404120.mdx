@@ -11,7 +11,7 @@ JavaScript에는 Module과 Package라는 시스템이 있습니다. ECMAScript S
 
 이 글은 JavaScript의 Module에 대해 간단히 알아보고, 또 서버사이드 JavaScript(Node.js)에서 Module과 Package가 어떻게 활용되는지 알아봅니다.
 
-## Module
+## # Module
 
 Module이란 즉 file입니다. 아래 예제를 봅시다.
 
@@ -52,7 +52,7 @@ Module 시스템은 이처럼 하나의 파일에서 다른 파일의 값을 참
 
 이번엔 Package에 대해 이야기해봅시다. 이는 브라우저에서는 지원되지 않고, Server side JavaScript (Node.js)에만 해당하는 내용입니다.
 
-## Package
+## # Package
 
 Package는 Module의 집합입니다. JavaScript 생태계에는 다양한 Package가 존재하며 이들은 Package Manager를 통해 편리하게 이용할 수 있습니다. Package는 왜 존재하는 걸까요? Module은 여러 다양한 파일로 코드를 분할하고 거대한 코드베이스를 손쉽게 관리할 수 있게 해주었지만, 공통 코드를 손쉽게 공유하거나 다른 사람의 작업물을 가져다 사용하는 것은 Module 만으로는 쉽지 않습니다. 그래서 Module 시스템을 바탕으로 Package 시스템이 만들어져 있습니다. 다르게 말하면, Package도 결국 일종의 Module입니다.
 
@@ -89,13 +89,13 @@ console.log(hello); // world!
 
 `myPackage` 라는 문자열로 package 이름을 명시하고, 해당 package의 entrypoint module에서 `hello` 라는 변수를 가져와 사용했습니다. 정말 쉽네요.
 
-## Package Registry
+## ## Package Registry
 
 방금 본 `myPackage`는 script.js와 동일한 머신(컴퓨터)에 있는 패키지였습니다. 만약 다른 사람이 만든, 예컨대 지구 반대편의 개발자가 만든 Package를 쓰려면 어떻게 해야 할까요? 이메일로 연락해 파일을 직접 받을 수도 있겠지만... 어딘가에 올려두고 필요할 때 찾아서 내려받으면 더욱 편리하지 않을까요?
 
 이런 상황을 위해 Package registry가 존재합니다. Package registry는 다양한 패키지를 업로드해두고 필요한 사람이 다운로드할 수 있는 공개/비공개 저장소입니다. 비공개인 경우는 특정한 인증을 통과한 사용자만 다운로드할 수 있는 패키지들을 가리킵니다. 이러한 Package registry에는 대표적으로 registry.npmjs.org, npm.pkg.github.com 등이 있습니다. 전자는 Node.js 생태계에서 가장 많이 활용되는 [npm registry](https://docs.npmjs.com/cli/v10/using-npm/registry)이고, 후자는 [Github Package 중 npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry) 부분입니다.
 
-## Package Manager
+## ## Package Manager
 
 Registry만 있으면 패키지를 내려받고, 신규버전을 업데이트하고, 필요없는 건 지우는 작업을 일일이 직접 해야 합니다. 이러한 작업을 손쉽게 도와주는 친구가 바로 Package Manager입니다. 대표적으로 npm, yarn, pnpm 등이 있는데요.
 
@@ -148,17 +148,17 @@ import "react";
 
 이를 dependency, 즉 의존성이라 부르는데요. registry 에 배포된 거의 모든 package 들은 이렇게 또다른 package 를 의존성으로 갖고 있습니다. 다시 말해, 누군가 my-node-program 을 사용하려 한다면 react 도 함께 설치할 필요가 있다는 것이죠. 다행히 package manager 는 매우 똑똑해서 이러한 의존성을 패키지 설치 시 모두 함께 설치해줍니다.
 
-### "Package" manager, not "Module" manager
+## ### "Package" manager, not "Module" manager
 
 기억해야 할 것은 Package manager는 패키지의 설치와 삭제 등 관리를 지원하는 것이지, 런타임의 모듈 시스템에 관여하는 것은 (사전적으로) 아닙니다. 패키지를 사용 가능한 형태의 module로 바꿔서 런타임이 접근할 수 있는 장소에 가져다 두는 것이 Package manager의 역할입니다. 실제 패키지(의 모듈)를 사용하는 것에 대한 책임은 당연히 런타임에 있습니다. 다만 package manager 중 하나인 yarn은 module system에 대한 처리도 같이 수행하는 것도 가능한데요. 이는 뒤에서 다시 자세히 알아보겠습니다.
 
-# Module proposals, standard
+## # Module proposals, standard
 
 지금까지는 Module과 Package에 대해 기초적인 설명을 했습니다. 사실, 다른 언어의 Module과 Package를 사용해봤다면 너무나도 당연하고 쉬운 내용들이었을 겁니다. 이미 JavaScript를 사용하고 계신 분들에게도 숨쉬듯 익숙한 이야기입니다. 이제부턴, 좀 더 깊은 내용을 다뤄보겠습니다. 실질적으로 JS에서 모듈 및 패키지를 사용할 때 필요한 지식에 대해 이야기해보겠습니다.
 
 JavaScript 의 Module System 은 흔히 ESM, ECMAScript Module 이라고 부릅니다. 앞에서 사용한 모든 예제는 ESM 으로 작성되어 있습니다. 이렇게 별명이 붙은 이유는 ESM 이전에 다양한 Module system 이 제안 되었기 때문입니다. 그 중 가장 유명하며 현재에도 활용되고 있는 시스템은 CommonJS, 일명 CJS 입니다. ESM과 CJS, 이 두 가지를 한 번 알아봅시다. 아래 설명은 Node.js 및 Chrome 을 기준으로 합니다.
 
-## CommonJS
+## ## CommonJS
 
 CJS 를 먼저 설명하는 이유는 단순합니다. CJS 가 먼저 출시되었기 때문입니다. CJS 에서 Module 을 정의 및 가져오는 방법은 아래와 같습니다.
 
@@ -218,7 +218,7 @@ if (myModule.value === 1) {
 
 이러한 문제 의식이 다음에 설명할 ESM을 탄생시키게 됩니다. 보다 자세하게는 AMD, UMD 등의 시도들이 있었는데요. 최종적으로 ECMAScript 표준에 합류하게 된 모듈 시스템은 이들보다 진보된 방식입니다.
 
-## ECMAScript Module
+## ## ECMAScript Module
 
 <Quote>
   ESM module은 모두 strict mode로 취급됩니다. strict mode에 대해 궁금하시다면
@@ -285,7 +285,7 @@ ESM 의 중요한 특징이 하나 더 있습니다. **확장자를 반드시 �
 
 Node.js ESM 에서 상대, 절대경로 및 package 를 찾는 알고리즘 자체는 CJS 의 그것과 매우 유사합니다. 자세한 알고리즘은 또한 [Node.js 문서](https://nodejs.org/api/esm.html#resolution-algorithm)에 적혀있습니다.
 
-## 둘을 섞어 쓴다면
+## ## 둘을 섞어 쓴다면
 
 CJS와 ESM의 가장 큰 차이점은 모듈 해석을 동기적으로 하는지, 비동기적으로 하는지에 있습니다. 비동기적인 module에서는 동기적으로 처리되어야 하는 module을 당연히 불러올 수 있겠지만, 동기적인 module은 비동기적으로 처리되는 module을 가져올 수 없을 겁니다. module이 요청지 쪽에 반환되는 시점에는 아무것도 알 수 없을테니까요. 이런 상황을 생각해봅시다.
 
@@ -310,11 +310,11 @@ ESM에서는 CJS를 참조할 수 있습니다. CJS의 전제조건들이 ESM에
 - CJS 혹은 ESM 둘 중 하나만을 제공합니다. 후자의 경우가 더 많은데, 당연히 그 이유는 ESM이 JavaScript Module의 표준이기 때문입니다. 이 경우 CJS 코드베이스에서는 해당 패키지를 사용하기 매우 어려워집니다.
 - CJS, ESM 각각의 포맷으로 작성된 코드를 [둘 다 제공](https://toss.tech/article/commonjs-esm-exports-field)합니다. Dual Package라고 부르기도 합니다. 다만 이 방식은 [Dual Package hazard](https://nodejs.org/api/packages.html#dual-package-hazard)를 유발할 수 있습니다.
 
-# 실전 활용
+## # 실전 활용
 
 앞서 설명한 ESM, CJS 규격은 말그대로 규격입니다. JavaScript가 실행되는 환경은 각 모듈 시스템을 지원할 수도, 지원하지 않을 수도 있습니다. 예를 들어 브라우저에서는 ESM만 사용할 수 있고, Node.js는 ESM와 CJS 모두 사용할 수 있는데요. 각각을 조금 더 자세히 알아보겠습니다.
 
-## In Browser
+## ## In Browser
 
 브라우저 환경의 JavaScript 는 ESM 만을 지원합니다. 앞서 말했듯 CommonJS 는 원래 서버 생태계를 위해 탄생했던 것이라 브라우저 환경에는 적합하지 않았고, 그래서 브라우저 환경을 1순위로 삼는 ECMAScript 표준에는 채택될 수 없었습니다. [현대의 브라우저들은 거의 모두 ESM을 지원하는데요.](https://caniuse.com/?search=import)
 
@@ -336,7 +336,7 @@ console.log(value); // 1
 
 하지만 당연히 ESM 은 JS 가 등장하고 한참이 지나 JS 웹 어플리케이션 생태계가 폭발적으로 성장하기 시작한 뒤에 나왔기 때문에, 그 전의 브라우저 JavaScript 는 모듈을 사용할 수 없었습니다. 그럼 그때는 어떻게 했을까요? 설마 클라이언트 JS 를 몽땅 하나의 파일에 다 작성했었을까요?
 
-### Bundler
+## ### Bundler
 
 농담처럼 말했지만 "몽땅 하나의 파일에 다 작성"은 반 쯤 맞는 말입니다. 물론 사람이 하나의 파일에 들어간 몇 천, 몇 만 줄의 코드를 유지보수하기란 불가능에 가깝겠죠. JS 생태계는 브라우저에게 전달하기 위한 JS 코드를 모듈화 시켜서 관리하기 위해 Bundler 를 고안하게 됩니다. Bundler 는 entrypoint script 를 받고, 해당 script 가 의존하는 다른 모든 모듈을 불러온 다음 하나의 파일에 몰아넣어줍니다. 예를 들어 아래와 같은 모듈을
 
@@ -393,7 +393,7 @@ console.log(myModule);
 
 갑자기 Loader라는 단어가 나왔습니다. Loader는 런타임에서 모듈의 위치를 찾고, 해석하고, 모듈을 참조하는 쪽에 올바른 데이터를 전달하는 역할을 합니다.
 
-## In Node.js
+## ## In Node.js
 
 가장 유명하고 활발히 활용되는 JS Server Runtime인 Node.js는 CJS와 ESM을 모두 지원하여 각각의 Loader가 구현되어 있습니다. [CJS Loader](https://github.com/nodejs/node/tree/main/lib/internal/modules/cjs)는 CJS module을 불러올 때 사용되고, [ESM Loader](https://github.com/nodejs/node/tree/main/lib/internal/modules/esm)는 ESM module을 불러올 때 사용됩니다. 각 Loader에 대한 자세한 내용은 [Node.js 공식 문서](https://nodejs.org/api/packages.html#modules-loaders)를 확인하는 것이 좋습니다.
 
@@ -480,17 +480,17 @@ require("./image.png"); // "./image.png"
 
 CJS Loader Monkey patching과 Customization Hook을 이용해 재밌는 아이디어를 떠올려볼 수도 있습니다: 아예 근본적으로 `node_modules`를 쓰지 말고, 모듈의 위치를 우리 마음대로 정하고 거기서 가져오게 만들면 어떨까요? 아까 Node.js는 `node_modules`를 순회한다고 했습니다. 게다가 file I/O가 빈번하게 발생하기 때문에 속도도 굉장히 느릴겁니다(물론 한 번 가져온 모듈은 캐싱이 됩니다만). 아예 순회를 하지 않게 할 수 있다면요? Loader 동작은 스펙만 지킨다면 마음대로 수정할 수 있으니까 불가능한 일이 아니죠. **이 아이디어를 구현한 것이 yarn berry 의 Plug and Play, 일명 pnp 방식입니다.** 이 이야기를 하기 전에 먼저 패키지 매니저에 대해 조금 더 자세히 들여다볼 필요가 있겠네요.
 
-# Other Package Managers
+## # Other Package Managers
 
 npm이 가장 유명한 Package manager지만, 외에도 여러 package manager들이 있습니다. 대표적으로 yarn, pnpm이 있습니다. 이들은 어떻게 Package와 Module을 관리할까요?
 
-## pnpm
+## ## pnpm
 
 pnpm은 Performant npm의 약자입니다. 성능에 집중한 npm의 변종인데요. pnpm은 기본적으로 npm 과 같지만, `node_modules` 를 구성하는 방식이 다릅니다. 앞서 말했듯 `node_modules`에는 패키지의 의존성이 모두 담겨있는데요. pnpm이 의존성들을 global cache 라는 통합된 공간에 저장하고 각 패키지의 `node_modules`에 [symbolic link](https://en.wikipedia.org/wiki/Symbolic_link)를 걸어둡니다. pnpm 공식 문서의 [Motiviation](https://pnpm.io/motivation)에 더 자세한 이야기가 있습니다.
 
 `node_modules`를 구성하는 방법을 제외하면 npm과 똑같으므로 pnpm을 사용할 때는 특별히 더 고려할 것이 없습니다. 사실, pnpm을 안 쓸 이유가 없는 셈이죠!
 
-## yarn
+## ## yarn
 
 yarn은 3 가지의 Module 관리 방식을 제공합니다. 첫 번째는 일반적인 Node.js 의 방식인 node_modules, 두 번째는 pnpm의 방식, 세 번째는 pnp 방식입니다. 첫 번째와 두 번째는 앞서 설명했으니 이제 세 번째인 pnp 방식을 알아보겠습니다.
 
@@ -521,7 +521,7 @@ yarn node index.js
 
 pnp 자체의 패키지 resolving 알고리즘에 대한 것은 [PnP Specification](https://yarnpkg.com/advanced/pnp-spec)을 참고해주세요. yarn은 pnp의 스펙에 대해 이렇게 체계적으로 문서화해 두었기 때문에, pnp 방식의 패키지 관리를 사용하기 위해 꼭 yarn을 사용할 필요는 없습니다. 대표적으로 [esbuild는 자체적으로 pnp 알고리즘을 내장](https://github.com/evanw/esbuild/pull/2451)해두었어요.
 
-# Conclusion
+## # Conclusion
 
 JavaScript의 Module과 Package, 그리고 각 시스템이 구현된 환경과 커스터마이징 옵션들에 대해 알아보았습니다. 한 번 다시 요약해보겠습니다.
 

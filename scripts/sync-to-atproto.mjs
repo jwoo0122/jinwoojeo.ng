@@ -36,7 +36,7 @@ for (const file of files) {
   const { data } = matter(raw)
 
   const slug = file.replace('.mdx', '')
-  const url = `https://leo.works/${slug}`
+  const url = `https://jinwoojeo.ng/posts/${slug}`
 
   const record = {
     $type: 'app.bsky.feed.post',

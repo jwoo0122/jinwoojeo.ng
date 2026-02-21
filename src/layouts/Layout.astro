@@ -3,13 +3,14 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 
 type Props = {
-	title: string;
-	description: string;
-	heroImage?: string;
-	hideNavbar?: boolean;
+  title: string;
+  description: string;
+  heroImage?: string;
 };
 
 const { title, description, heroImage } = Astro.props;
+
+const menuStyle = "text-neutral-600 block my-3";
 ---
 
 <!doctype html>
@@ -21,9 +22,22 @@ const { title, description, heroImage } = Astro.props;
     <BaseHead title={title} description={description} image={heroImage} />
   </head>
   <body>
-    <main class="m-auto max-w-2xl px-3.5">
+    <main class="max-w-xl m-6">
+      <div class="mb-8">
+        <span class="font-bold"> Jinwoo Jeong </span>
+        <a class={menuStyle} href="/">About</a>
+        <a class={menuStyle} href="/posts">Posts</a>
+        <a class={menuStyle} href="https://github.com/jwoo0122" target="_blank"
+          >GitHub</a
+        >
+        <a
+          class={menuStyle}
+          href="https://bsky.app/profile/jinwoojeo.ng"
+          target="_blank">Bluesky</a
+        >
+      </div>
       <slot />
+      <Footer />
     </main>
-    <Footer />
   </body>
 </html>

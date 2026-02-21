@@ -6,7 +6,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://leo.works",
+  site: "https://jinwoojeo.ng",
   integrations: [
     mdx(),
     sitemap(),
@@ -22,4 +22,3 @@ export default defineConfig({
     },
   },
 });
-
