@@ -1,13 +1,10 @@
 ---
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
-// import { getHeroImages } from "../../lib/getHeroImages";
 import Layout from "../../layouts/Layout.astro";
-// import { Image } from "astro:assets";
 import Utterance from "../../components/Utterance.astro";
 import { getReadingTime } from "../../lib/readingTime";
 import Prose from "../../components/forMdx/Prose.astro";
-// import Header from "../../components/Header.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -23,9 +20,7 @@ const post = Astro.props;
 const {
   data: { title, description, heroImage, pubDate },
   body,
-  slug,
 } = post;
-// const heroImagePath = getHeroImages(heroImage || "");
 const { Content } = await post.render();
 const readingTime = getReadingTime(body);
 ---
