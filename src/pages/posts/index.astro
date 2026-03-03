@@ -16,7 +16,7 @@ const posts = (await getCollection("blog")).sort(
       posts.map((post) => (
         <PostPreview
           title={post.data.title}
-          date={post.data.pubDate.toLocaleDateString("ko-KR", {
+          date={post.data.pubDate.toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
