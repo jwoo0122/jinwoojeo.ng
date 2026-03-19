@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "node scripts/sync-to-atproto.mjs && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
