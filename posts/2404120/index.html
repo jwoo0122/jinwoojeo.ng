@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/cat.ico">
+  <link rel="canonical" href="https://jinwoojeo.ng/posts/2404120/">
+  <title>JS: Module &amp; Package</title>
+  <meta name="title" content="JS: Module &amp; Package">
+  <meta name="description" content="(거의) 완벽하게 JavaScript 모듈과 패키지에 대해 알아봅시다. 기초부터 차근차근!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jinwoojeo.ng/posts/2404120/">
+  <meta property="og:title" content="JS: Module &amp; Package">
+  <meta property="og:description" content="(거의) 완벽하게 JavaScript 모듈과 패키지에 대해 알아봅시다. 기초부터 차근차근!">
+  <meta property="og:image" content="/images/2404120.png">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://jinwoojeo.ng/posts/2404120/">
+  <meta property="twitter:title" content="JS: Module &amp; Package">
+  <meta property="twitter:description" content="(거의) 완벽하게 JavaScript 모듈과 패키지에 대해 알아봅시다. 기초부터 차근차근!">
+  <meta property="twitter:image" content="https://jinwoojeo.ng/images/2404120.png">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script>
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const set = (dark) => document.documentElement.classList.toggle('dark', dark);
+    mq.addEventListener('change', (e) => set(e.matches));
+    set(mq.matches);
+  </script>
+</head>
+<body>
+  <main class="container">
+    <div class="header">
+      <span class="site-title">Jinwoo Jeong</span>
+      <a class="nav-link" href="/">About</a>
+      <a class="nav-link" href="/posts">Posts</a>
+      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
+    </div>
+
+    <h1 class="post-title">JS: Module &amp; Package</h1>
+    <div class="post-meta">
+      <time>April 12, 2024</time><span> / 18min</span>
+    </div>
+    <div class="post-spacer"></div>
+    <div class="prose">
+      <p>JavaScript에는 Module과 Package라는 시스템이 있습니다. ECMAScript Spec에는 <a href="https://tc39.es/ecma262/#sec-modules">Module이 정의</a>되어 있으며, Package는 npm을 비롯한 Package Manger와 Node.js에 의해 관리됩니다. JS가 처음 만들어졌을 때는 Module이라는 개념이 없었습니다. 이후 Node.js의 등장과 함께 module 및 package 시스템의 필요성이 대두되면서 현재의 모습으로 자리잡게 됩니다. 이러한 컨셉은 다른 언어에도 흔히 존재하고, JavaScript의 그것과 기본적인 철학은 동일합니다. 하지만 JavaScript의 Module 및 Package 생태계는 다소 복잡한 과정을 거치며 발전해왔고, 때로는 기형적이고 때로는 놀라운 모습으로 우리를 당황하게 만듭니다.</p>
+<p>이 글은 JavaScript의 Module에 대해 간단히 알아보고, 또 서버사이드 JavaScript(Node.js)에서 Module과 Package가 어떻게 활용되는지 알아봅니다.</p>
+<h2># Module</h2>
+<p>Module이란 즉 file입니다. 아래 예제를 봅시다.</p>
+<pre><code class="language-javascript">// index.js
+const value = 1;
+console.log(value); // 1
+</code></pre>
+<p>아주 간단한 파일(module)입니다. 그런데, 이 value를 다른 파일에서 가져오고 싶다면 어떻게 할까요?</p>
+<pre><code class="language-javascript">// value.js
+const value = 1;
+
+// index.js
+console.log(value); // ReferenceError: value is not defined.
+</code></pre>
+<p>다른 파일(module)의 값을 참조하기 위해서는</p>
+<ol>
+<li><em><strong>파일의 위치를 알아야 하고</strong> (value.js는 어디에 있을까요?)</em></li>
+<li><em><strong>파일의 내용물을 해석해야 하고</strong> (value.js는 어떤 값을 갖고 있을까요? 어쩌면 value 변수가 없을 지도 모릅니다.)</em></li>
+<li><em><strong>해석된 결과물 중 원하는 것을 가져올 수 있어야 합니다.</strong> (value가 있다면 가져올 수 있어요. 신난다!)</em></li>
+</ol>
+<p>브라우저 환경을 생각했을 때, value.js와 index.js가 같은 path에 존재한다면 아래처럼 만들어볼 수 있습니다.</p>
+<pre><code class="language-javascript">// value.js
+export const value = 1;
+
+// index.js
+import { value } from &quot;./value.js&quot;;
+console.log(value); // 1
+</code></pre>
+<p>Module 시스템은 이처럼 하나의 파일에서 다른 파일의 값을 참조할 수 있도록 해줍니다. 위와 같은 방식을 ECMAScript Module 이라고 하는데요. 여기까지는 ECMAScript 표준이며 브라우저에서 지원되는 영역입니다.</p>
+<p>이번엔 Package에 대해 이야기해봅시다. 이는 브라우저에서는 지원되지 않고, Server side JavaScript (Node.js)에만 해당하는 내용입니다.</p>
+<h2># Package</h2>
+<p>Package는 Module의 집합입니다. JavaScript 생태계에는 다양한 Package가 존재하며 이들은 Package Manager를 통해 편리하게 이용할 수 있습니다. Package는 왜 존재하는 걸까요? Module은 여러 다양한 파일로 코드를 분할하고 거대한 코드베이스를 손쉽게 관리할 수 있게 해주었지만, 공통 코드를 손쉽게 공유하거나 다른 사람의 작업물을 가져다 사용하는 것은 Module 만으로는 쉽지 않습니다. 그래서 Module 시스템을 바탕으로 Package 시스템이 만들어져 있습니다. 다르게 말하면, Package도 결국 일종의 Module입니다.</p>
+<p>Package는 package.json이라는 manifest 파일을 갖습니다.</p>
+<pre><code class="language-json">// myPackage/package.json
+{
+  &quot;name&quot;: &quot;myPackage&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;main&quot;: &quot;./index.js&quot;
+}
+</code></pre>
+<p>package.json은 Package 디렉토리의 최상위에 위치하며, 이후 다른 JS Module이 패키지를 참조할 때 도움이 되는 정보를 담고 있습니다. 예를 들어 위 manifest는</p>
+<ul>
+<li>이 package의 이름은 <code>myPackage</code> 이며, 버전은 1.0.0 입니다.</li>
+<li>이 package의 entrypoint module은 <code>./index.js</code> 입니다. (상대경로는 manifest file 자신을 기준으로 결정됩니다)</li>
+</ul>
+<p>라는 정보를 담고 있습니다. 여기서 entrypoint module이란 이 package를 가져다 사용하기 위해 참조해야 하는 module을 가리킵니다. 즉, <code>myPackage</code>를 사용할 때는 <code>/path/to/myPackage/index.js</code> 파일(모듈)을 참조해야 합니다.</p>
+<p>이 entrypoint 는 <a href="https://nodejs.org/api/packages.html#exports"><code>export</code></a> 필드를 활용해 더 복잡하게 구성할 수 있는데요. 예를 들어 <code>myPackage/subPackage</code>처럼 <a href="https://nodejs.org/api/packages.html#subpath-exports">import specifier에 sub path가 존재하는 경우</a>, 혹은 <code>import</code>를 사용했는지 아니면 <code>require()</code>를 사용했는지 등 <a href="https://nodejs.org/api/packages.html#conditional-exports">상황에 따라 제공하고 싶은 entrypoint script가 다른 경우</a> 등을 지원할 수 있습니다.</p>
+<p>그럼 패키지를 사용해볼까요?</p>
+<pre><code class="language-javascript">// myPackage/index.js
+export const hello = &quot;world!&quot;;
+
+// script.js
+import { hello } from &quot;myPackage&quot;;
+console.log(hello); // world!
+</code></pre>
+<p><code>myPackage</code> 라는 문자열로 package 이름을 명시하고, 해당 package의 entrypoint module에서 <code>hello</code> 라는 변수를 가져와 사용했습니다. 정말 쉽네요.</p>
+<h2>## Package Registry</h2>
+<p>방금 본 <code>myPackage</code>는 script.js와 동일한 머신(컴퓨터)에 있는 패키지였습니다. 만약 다른 사람이 만든, 예컨대 지구 반대편의 개발자가 만든 Package를 쓰려면 어떻게 해야 할까요? 이메일로 연락해 파일을 직접 받을 수도 있겠지만... 어딘가에 올려두고 필요할 때 찾아서 내려받으면 더욱 편리하지 않을까요?</p>
+<p>이런 상황을 위해 Package registry가 존재합니다. Package registry는 다양한 패키지를 업로드해두고 필요한 사람이 다운로드할 수 있는 공개/비공개 저장소입니다. 비공개인 경우는 특정한 인증을 통과한 사용자만 다운로드할 수 있는 패키지들을 가리킵니다. 이러한 Package registry에는 대표적으로 registry.npmjs.org, npm.pkg.github.com 등이 있습니다. 전자는 Node.js 생태계에서 가장 많이 활용되는 <a href="https://docs.npmjs.com/cli/v10/using-npm/registry">npm registry</a>이고, 후자는 <a href="https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry">Github Package 중 npm registry</a> 부분입니다.</p>
+<h2>## Package Manager</h2>
+<p>Registry만 있으면 패키지를 내려받고, 신규버전을 업데이트하고, 필요없는 건 지우는 작업을 일일이 직접 해야 합니다. 이러한 작업을 손쉽게 도와주는 친구가 바로 Package Manager입니다. 대표적으로 npm, yarn, pnpm 등이 있는데요.</p>
+<pre><code class="language-bash"># npm
+npm install otherPackage
+npm uninstall unusedPackage
+
+# yarn
+yarn add otherPackage
+yarn remove unusedPackage
+</code></pre>
+<p>package manager는 설치, 삭제 등의 명령어를 제공합니다. 이런 명령어가 실행되면, package manager 는 registry 에서 패키지를 내려받아 로컬 컴퓨터에 사용가능한 형태로 저장하거나(registry에는 압축파일의 형태로 업로드되어 있습니다), 필요없는 패키지를 찾아내 삭제하기도 합니다. 그럼 패키지 매니저들은 패키지를 내려받아서 <em>어디에</em> 저장하는 걸까요? 가장 대표적으로는 <code>node_modules</code> 위치에 저장합니다. 이 디렉토리는 Node.js가 기본적으로 package를 찾을 때 사용하는 디렉토리입니다.</p>
+<p>예를 들어,</p>
+<pre><code class="language-bash"># pwd: ~/my-node-program
+npm install react@1.0.0
+</code></pre>
+<p>는 <code>~/my-node-program/node_modules/react</code> 디렉토리에 registry에서 받아온 react package의 내용물을 압축 해제하여 저장해둡니다. registry에서 패키지를 가져올 때는 아래의 절차를 거치는데요. Package manager 구현과 registry의 API 인터페이스에 따라 implementation detail은 달라질 수 있지만, 핵심적인 부분은 같습니다.</p>
+<ul>
+<li>registry에 <code>react</code>라는 이름을 갖는 <a href="https://registry.npmjs.org/react">패키지가 있는지 물어봅니다</a>.</li>
+<li>원하는 버전의 <a href="https://registry.npmjs.org/react/-/react-0.0.1.tgz"><code>tarball</code> 주소</a>를 찾아 다운로드합니다.</li>
+</ul>
+<p>이후 Node.js가 스크립트를 실행하다가</p>
+<pre><code class="language-javascript">// ~/my-node-program/index.js
+import &quot;react&quot;;
+</code></pre>
+<p>이런 구문을 만난다면, Node.js 는 <code>~/my-node-program/node_modules</code> 내에서 <code>react</code> 디렉토리를 찾고 그 안의 <code>package.json</code> 을 봅니다. 거기엔 당연히 <code>main</code> 을 비롯해 다양한 패키지에 대한 정보가 적혀있을 것이고, 해당 정보를 바탕으로 패키지 내의 모듈을 가져와 사용하게 됩니다.</p>
+<p>또한 이렇게 설치된 패키지들은 해당 패키지를 사용하는 패키지(!)의 <code>package.json</code> 에 기록됩니다.</p>
+<pre><code class="language-json">// ~/my-node-program/package.json
+{
+  &quot;name&quot;: &quot;my-node-program&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;main&quot;: &quot;./index.js&quot;,
+  &quot;dependencies&quot;: {
+    &quot;react&quot;: &quot;1.0.0&quot;
+  }
+}
+</code></pre>
+<p>이를 dependency, 즉 의존성이라 부르는데요. registry 에 배포된 거의 모든 package 들은 이렇게 또다른 package 를 의존성으로 갖고 있습니다. 다시 말해, 누군가 my-node-program 을 사용하려 한다면 react 도 함께 설치할 필요가 있다는 것이죠. 다행히 package manager 는 매우 똑똑해서 이러한 의존성을 패키지 설치 시 모두 함께 설치해줍니다.</p>
+<h2>### &quot;Package&quot; manager, not &quot;Module&quot; manager</h2>
+<p>기억해야 할 것은 Package manager는 패키지의 설치와 삭제 등 관리를 지원하는 것이지, 런타임의 모듈 시스템에 관여하는 것은 (사전적으로) 아닙니다. 패키지를 사용 가능한 형태의 module로 바꿔서 런타임이 접근할 수 있는 장소에 가져다 두는 것이 Package manager의 역할입니다. 실제 패키지(의 모듈)를 사용하는 것에 대한 책임은 당연히 런타임에 있습니다. 다만 package manager 중 하나인 yarn은 module system에 대한 처리도 같이 수행하는 것도 가능한데요. 이는 뒤에서 다시 자세히 알아보겠습니다.</p>
+<h2># Module proposals, standard</h2>
+<p>지금까지는 Module과 Package에 대해 기초적인 설명을 했습니다. 사실, 다른 언어의 Module과 Package를 사용해봤다면 너무나도 당연하고 쉬운 내용들이었을 겁니다. 이미 JavaScript를 사용하고 계신 분들에게도 숨쉬듯 익숙한 이야기입니다. 이제부턴, 좀 더 깊은 내용을 다뤄보겠습니다. 실질적으로 JS에서 모듈 및 패키지를 사용할 때 필요한 지식에 대해 이야기해보겠습니다.</p>
+<p>JavaScript 의 Module System 은 흔히 ESM, ECMAScript Module 이라고 부릅니다. 앞에서 사용한 모든 예제는 ESM 으로 작성되어 있습니다. 이렇게 별명이 붙은 이유는 ESM 이전에 다양한 Module system 이 제안 되었기 때문입니다. 그 중 가장 유명하며 현재에도 활용되고 있는 시스템은 CommonJS, 일명 CJS 입니다. ESM과 CJS, 이 두 가지를 한 번 알아봅시다. 아래 설명은 Node.js 및 Chrome 을 기준으로 합니다.</p>
+<h2>## CommonJS</h2>
+<p>CJS 를 먼저 설명하는 이유는 단순합니다. CJS 가 먼저 출시되었기 때문입니다. CJS 에서 Module 을 정의 및 가져오는 방법은 아래와 같습니다.</p>
+<pre><code class="language-javascript">// myModule.js
+module.exports = {
+  value: 1,
+};
+
+// index.js
+const myModule = require(&quot;./myModule&quot;);
+console.log(myModule.value); // 1
+</code></pre>
+<p>눈에 띄는 점들이 있습니다. 한 번 나열해볼까요?</p>
+<ol>
+<li>모듈의 확장자가 명시되지 않았습니다. 실제 파일의 이름은 <code>myModule.js</code> 지만, 코드에서는 <code>myModule</code> 만 적어주었습니다.</li>
+<li><code>require</code> 를 사용해 모듈을 가져왔습니다. 이는 함수입니다. 즉, CJS 에는 기본적으로 <code>require</code> 라는 함수가 정의되어 있습니다.</li>
+<li><code>module.exports</code> 를 사용해 모듈이 노출할 것들을 정의했습니다. 변수에 값을 지정했습니다. 즉, CJS 에는 기본적으로 <code>module</code> 이라는 특수목적 변수가 정의되어 있습니다.</li>
+</ol>
+<p>1은 확장자를 굳이 명시하지 않아도 알아서 <code>.js</code> 를 붙여서 모듈을 찾는다는 의미입니다. Node.js 에서는 이렇게 상대경로 혹은 절대경로로 시작하며 확장자가 붙어있지 않은 경우, 다음 과정을 거쳐 모듈을 탐색합니다.</p>
+<ul>
+<li>우선 정확히 이름이 같은 모듈을 찾습니다. 여기서는 <code>myModule</code> 이겠네요.</li>
+<li>만약 없다면, <code>.js</code> 를 붙여서 찾습니다. 여기서는 <code>myModule.js</code> 겠죠?</li>
+<li>그래도 없다면, <code>.json</code> 을 붙여서 찾습니다. 즉 <code>myModule.json</code>.</li>
+<li>마지막으로 <code>.node</code> 를 붙여서 찾습니다. <code>myModule.node</code> 가 되는데, 이러한 파일은 <a href="https://nodejs.org/api/addons.html">Node.js Native addon</a> 으로 취급합니다.</li>
+</ul>
+<p>만약 명시된 모듈의 이름(specifier 라고 부릅니다)이 상대경로도, 절대경로도 아니라면 어떡할까요? 이런 경우는 package 로 취급하여 package 의 위치를 찾는 알고리즘을 수행하게 됩니다. 간단하게 설명하자면 현재 디렉토리부터 시작해서 상위 디렉토리로 거슬러 올라가면서 <code>node_modules</code> 디렉토리를 찾고 탐색하는데요. <code>node_modules</code> 내에 specifier 와 동일한 이름을 갖는 경로가 있다면 해당 디렉토리의 <code>package.json</code> 을 참고해 entrypoint module 을 가져오게 됩니다.</p>
+<p>상대 및 절대경로, <code>#</code>(package imports), absolute specifier(package exports) 등을 모두 포함하는 알고리즘은 <a href="https://nodejs.org/api/modules.html#all-together">Node.js 공식 문서</a>에서 확인할 수 있습니다.</p>
+<p>다시 &quot;눈에 띄는 점들&quot;로 돌아가봅시다. 2와 3을 생각해보면, 아래와 같은 코드도 가능할 겁니다. <code>require</code> 와 <code>module</code> 은 그저 함수와 변수일 뿐이니까요.</p>
+<pre><code class="language-javascript">let myModule;
+
+if (Math.random() &gt; 0.5) {
+  myModule = require(&quot;./myModule1&quot;);
+} else {
+  myModule = require(&quot;./myModule2&quot;);
+}
+
+if (myModule.value === 1) {
+  module.exports = {
+    value: 1,
+  };
+} else {
+  module.exports = {
+    value: 2,
+  };
+}
+</code></pre>
+<p>이 모듈은 myModule1 혹은 2에서 value 값을 확인한 후, 다시 1 또는 2를 외부로 노출하고 있습니다. 그리고 이 과정은 완전히 랜덤하게 진행됩니다. 즉 모듈을 가져올 때마다 (이 모듈을 실행할 때마다) 다른 값을 받게 된다는 의미입니다. 이는 즉 CJS의 모듈은 모듈 전체의 실행을 끝마친 뒤에야 export를 알 수 있다는 뜻이 되고, 따라서 <strong>CJS 모듈을 불러올 때는 동기적으로 작동해야 한다</strong>는 의미입니다. 이것이 CJS의 가장 큰 특징인데요. CJS가 이런 형태를 취하는 이유는 원래 <a href="https://wiki.mozilla.org/ServerJS">CommonJS가 서버 상황을 상정하고 만들어진 스펙</a>이기 때문입니다. 처음엔 ServerJS로 불렸습니다.</p>
+<p>서버는 모든 모듈이 로컬 머신에 존재한다고 가정할 수 있(고 대개의 경우 그렇지 않을 이유가 없)기 때문에 위와 같은 방식이 유효합니다. 구현도 명료하고, 조건부 export 혹은 require 를 처리할 수 있다는 장점이 있습니다. 하나의 모듈을 불러오는 과정이 모두 끝나야만 다음 모듈을 불러올 수 있다는 단점이 있겠지만 어차피 모두 현재 서버에 위치하고 있으므로 큰 문제가 되지 않죠. 하지만 이는 브라우저 환경에서는 그다지 좋은 접근법이 아닌데요. <strong>브라우저에는 기본적으로 아무런 모듈이 없고, 쪼개진 모듈을 항상 원격지에서 불러와야만 합니다.</strong> 만약 화면을 모두 그리기 위해 모든 모듈을 불러와야 하고, 한 번에 하나 씩의 모듈만 가져올 수 있다면 브라우저에서 화면을 그리는 시간이 끔찍하게 길어질 겁니다.</p>
+<p>이러한 문제 의식이 다음에 설명할 ESM을 탄생시키게 됩니다. 보다 자세하게는 AMD, UMD 등의 시도들이 있었는데요. 최종적으로 ECMAScript 표준에 합류하게 된 모듈 시스템은 이들보다 진보된 방식입니다.</p>
+<h2>## ECMAScript Module</h2>
+<quote-block>
+  ESM module은 모두 strict mode로 취급됩니다. strict mode에 대해 궁금하시다면
+  [이쪽](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)을
+  읽어보세요.
+</quote-block>
+
+<p>ESM 은 ECMAScript 에 정의된 표준 Module 시스템입니다. CJS 에 비해 여러 장점들이 있는데요. Module 의 정의 및 가져오기는 아래와 같습니다.</p>
+<pre><code class="language-javascript">// myModule.mjs
+export const value = 1;
+
+// index.mjs
+import { value } from &quot;./myModule.mjs&quot;;
+console.log(value); // 1
+</code></pre>
+<p>먼저 <code>.mjs</code> 라는 확장자에 주목해봅시다. 이는 이 파일이 ESM 을 따르는 JS 파일이라는 뜻입니다. Node.js는 <code>.mjs</code> 확장자의 파일을 만나면 기본적으로 ESM으로 이해하려 합니다. 브라우저에서의 설명은 조금 뒤에 하겠습니다.</p>
+<p>아무튼, 글 초반에 활용했던 예제와 같습니다. ESM 에서는 <code>import</code> 와 <code>export</code> 라는 특수한 표현식(expression)을 이용해 모듈의 출력과 요청을 표현합니다. 이들 expression 에는 매우 중요한 규약이 있는데, 바로 <strong>조건부 활용이 불가능하다는 점</strong>입니다.</p>
+<pre><code class="language-javascript">if (Math.random() &gt; 0.5) {
+  import randomModule from &quot;./randomModule&quot;; // SyntaxError: Unexpected identifier &quot;randomModule&quot;
+}
+
+// or...
+
+if (Math.random() &gt; 0.5) {
+  export const value = 1; // SyntaxError: Unexpected token &#39;export&#39;
+}
+</code></pre>
+<p>런타임 오류도 아니고 구문오류가 나버렸습니다. 이는 실행 시점이 아닌 스크립트 파싱 과정에서 에러가 발생했다는 의미입니다. 즉, <code>import</code> 와 <code>export</code> 는 모듈의 최상위 scope 에서만 사용할 수 있습니다. <strong>이는 모듈을 비동기적으로 불러올 수 있게 하기 위함입니다.</strong> 최상위 scope에서 조건 없이 <code>import</code> 혹은 <code>export</code>만 쓸 수 있다는 것은 해당 모듈이 어떤 순서로 언제 불러와지든 동일한 모듈을 제공한다는 의미입니다. 따라서 CJS에서 모듈을 불러오는 순서가 중요했던 것과 달리 ESM에서는 하나의 모듈이 여러 모듈을 참조할 때 이들을 동시에 비동기적으로 가져오는 것이 가능해집니다.</p>
+<quote-block>
+  잠깐 소개하자면, ESM에서도 물론 조건부 모듈 요청이 가능하긴 합니다. 이때는
+  `import` 표현식이 아닌
+  [`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)
+  함수를 활용해야 합니다.
+</quote-block>
+
+<p>ESM 은 기본적으로 비동기적인 모듈 로딩 동작을 수행합니다. 좀 더 구체적으로 말하자면 모듈을 불러오는 과정이 이렇게 이루어집니다.</p>
+<ul>
+<li>먼저 entrypoint script(Node.js 에게 처음 주어지는 파일)의 구문을 분석하여 <code>import</code> 와 <code>export</code>(물론 entrypoint 의 <code>export</code>는 쓸모가 없겠죠)을 찾아냅니다.</li>
+<li><code>import</code> 에 해당하는 모듈을 찾아냅니다.</li>
+<li>찾아낸 모든 모듈에 대해 같은 과정, 즉 <code>import</code> 와 <code>export</code> 를 찾아내고 각 모듈의 또다른 의존 모듈을 찾는 과정을 수행합니다.</li>
+<li>상술한 과정은 모두 비동기적으로 처리되어, 어떤 모듈이 먼저 평가될 지는 알 수 없습니다.</li>
+<li>하지만 결국엔 모든 모듈의 평가(evaluation)이 언젠가 끝날 것이고, 그럼 이제 우리는 완전한 모듈 tree 를 그릴 수 있게 됩니다.</li>
+<li>이제 entrypoint script 의 구문을 실행합니다.</li>
+</ul>
+<p>CJS 와 비교해볼까요?</p>
+<ul>
+<li>먼저 entrypoint script를 실행합니다.</li>
+<li><code>require</code> 문을 만나면 모듈을 찾고, 실행합니다. 이때 entrypoint script 의 실행은 멈춥니다. 동기적이니까요.</li>
+<li>해당 모듈의 실행이 모두 끝나면 우리는 이제 해당 모듈의 <code>module.exports</code> 를 알 수 있습니다. <code>require</code> 는 해당 값을 반환합니다.</li>
+<li>entrypoint script 의 실행을 계속합니다.</li>
+<li>그리고 이 과정을 반복합니다.</li>
+</ul>
+<p>따라서 모듈의 내용물을 모두 직접 다 실행하고 파악하지 않아도 빠르게 모듈을 이해하고 불러올 수 있게 됩니다. 이러한 비동기적 특성으로 인해 ESM은 브라우저 환경에 더욱 적합합니다. 또한 이 특성 덕분에 ESM은 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#top_level_await">Top level await</a>을 지원합니다. 게다가 <a href="https://webpack.js.org/guides/tree-shaking/">Tree shaking</a>도 가능해집니다. 링크를 Webpack의 문서로 걸었지만 Webpack에서만 지원하는 기능은 아니구요. 런타임에서 사용되는 함수를 제외한 나머지 코드를 모두 생략하는 기법인데, 브라우저에 JavaScript를 전달할 때 코드를 훨씬 압축할 수 있으므로 매우 효과적이고 중요한 기능입니다.</p>
+<p>ESM 의 중요한 특징이 하나 더 있습니다. <strong>확장자를 반드시 명시해야 한다</strong>는 점인데요. 이는 CJS가 확장자 없는 specifier 에 대해 <code>.js</code>, <code>.json</code>, <code>.node</code>를 순차탐색하는 것이 다분히 암시적이기 때문에 채택된 원칙이라고 생각합니다(정확한 이유를 아신다면 댓글로 알려주세요!).</p>
+<p>Node.js ESM 에서 상대, 절대경로 및 package 를 찾는 알고리즘 자체는 CJS 의 그것과 매우 유사합니다. 자세한 알고리즘은 또한 <a href="https://nodejs.org/api/esm.html#resolution-algorithm">Node.js 문서</a>에 적혀있습니다.</p>
+<h2>## 둘을 섞어 쓴다면</h2>
+<p>CJS와 ESM의 가장 큰 차이점은 모듈 해석을 동기적으로 하는지, 비동기적으로 하는지에 있습니다. 비동기적인 module에서는 동기적으로 처리되어야 하는 module을 당연히 불러올 수 있겠지만, 동기적인 module은 비동기적으로 처리되는 module을 가져올 수 없을 겁니다. module이 요청지 쪽에 반환되는 시점에는 아무것도 알 수 없을테니까요. 이런 상황을 생각해봅시다.</p>
+<pre><code class="language-javascript">// myModule.mjs
+// TLA(Top Level Await)
+await new Promise((res) =&gt;
+  setTimeout(() =&gt; {
+    res();
+  }, 1000)
+); // 1초 sleep
+export const value = 1;
+
+// index.js
+const myModule = require(&quot;./myModule&quot;);
+</code></pre>
+<p>CJS의 <code>require</code>은 동기적으로 동작합니다. 즉, myModule 내의 top level await을 이해하지 못합니다. <a href="https://github.com/nodejs/modules/issues/454"><strong><code>require</code>로는 ESM module을 가져올 수 없습니다.</strong></a> 그럼 CJS에서는 ESM 모듈을 절대 참조할 수 없는 걸까요? 다행히 <code>import()</code>는 CJS 모듈에서도 사용할 수 있습니다. 하지만 비동기 함수이기 때문에, 이 방식으로 참조한 모듈의 어떤 값에 의존해서 <code>module.exports</code>를 구성하려 한다면 많이 슬퍼집니다.</p>
+<p>ESM에서는 CJS를 참조할 수 있습니다. CJS의 전제조건들이 ESM에서는 모두 허용되기 때문입니다. 이런 문제 때문에 최근의 라이브러리들이 취하는 전략은 여러가지가 있습니다.</p>
+<ul>
+<li>CJS 혹은 ESM 둘 중 하나만을 제공합니다. 후자의 경우가 더 많은데, 당연히 그 이유는 ESM이 JavaScript Module의 표준이기 때문입니다. 이 경우 CJS 코드베이스에서는 해당 패키지를 사용하기 매우 어려워집니다.</li>
+<li>CJS, ESM 각각의 포맷으로 작성된 코드를 <a href="https://toss.tech/article/commonjs-esm-exports-field">둘 다 제공</a>합니다. Dual Package라고 부르기도 합니다. 다만 이 방식은 <a href="https://nodejs.org/api/packages.html#dual-package-hazard">Dual Package hazard</a>를 유발할 수 있습니다.</li>
+</ul>
+<h2># 실전 활용</h2>
+<p>앞서 설명한 ESM, CJS 규격은 말그대로 규격입니다. JavaScript가 실행되는 환경은 각 모듈 시스템을 지원할 수도, 지원하지 않을 수도 있습니다. 예를 들어 브라우저에서는 ESM만 사용할 수 있고, Node.js는 ESM와 CJS 모두 사용할 수 있는데요. 각각을 조금 더 자세히 알아보겠습니다.</p>
+<h2>## In Browser</h2>
+<p>브라우저 환경의 JavaScript 는 ESM 만을 지원합니다. 앞서 말했듯 CommonJS 는 원래 서버 생태계를 위해 탄생했던 것이라 브라우저 환경에는 적합하지 않았고, 그래서 브라우저 환경을 1순위로 삼는 ECMAScript 표준에는 채택될 수 없었습니다. <a href="https://caniuse.com/?search=import">현대의 브라우저들은 거의 모두 ESM을 지원하는데요.</a></p>
+<pre><code class="language-javascript">// https://localhost:3000/myModule.js
+export const value = 1;
+
+// https://localhost:3000/index.js
+import { value } from &quot;./myModule.js&quot;;
+console.log(value); // 1
+</code></pre>
+<pre><code class="language-html">&lt;!-- https://localhost:3000/index.html --&gt;
+&lt;script type=&quot;module&quot; src=&quot;./index.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>먼저 브라우저에서 ESM 모듈인 스크립트를 불러오기 위해선 <code>script</code> 태그에 <code>type=&quot;module&quot;</code> 이라는 attribute 를 붙여주어야 합니다. 확장자는 <code>.js</code> 여도 되고, <code>.mjs</code> 여도 됩니다. 이렇게 브라우저는 상대경로로 지정된 모듈에 대해 현재 도메인에 대한 상대경로로 해석하여 서버에게 모듈을 요청하고, 도착한 모듈을 해석하여 실행하게 됩니다. 물론 브라우저에는 <code>node_modules</code>는 커녕 그와 비슷한 공간조차 없기 때문에, 패키지 이름에 대해 resolve 하는 건 불가능한 일입니다.</p>
+<p>하지만 당연히 ESM 은 JS 가 등장하고 한참이 지나 JS 웹 어플리케이션 생태계가 폭발적으로 성장하기 시작한 뒤에 나왔기 때문에, 그 전의 브라우저 JavaScript 는 모듈을 사용할 수 없었습니다. 그럼 그때는 어떻게 했을까요? 설마 클라이언트 JS 를 몽땅 하나의 파일에 다 작성했었을까요?</p>
+<h2>### Bundler</h2>
+<p>농담처럼 말했지만 &quot;몽땅 하나의 파일에 다 작성&quot;은 반 쯤 맞는 말입니다. 물론 사람이 하나의 파일에 들어간 몇 천, 몇 만 줄의 코드를 유지보수하기란 불가능에 가깝겠죠. JS 생태계는 브라우저에게 전달하기 위한 JS 코드를 모듈화 시켜서 관리하기 위해 Bundler 를 고안하게 됩니다. Bundler 는 entrypoint script 를 받고, 해당 script 가 의존하는 다른 모든 모듈을 불러온 다음 하나의 파일에 몰아넣어줍니다. 예를 들어 아래와 같은 모듈을</p>
+<pre><code class="language-javascript">// myModule.js
+export const value = 1;
+
+// index.js
+import { value } from &quot;./myModule.js&quot;;
+console.log(value);
+</code></pre>
+<p>이렇게 bundler 에 전달하면</p>
+<pre><code class="language-bash"># esbuild bundler 에 대한 자세한 내용은 https://esbuild.github.io 를 참고하세요.
+esbuild index.js --bundle --outfile=out.js
+</code></pre>
+<p>이런 스크립트로 재탄생 시켜줍니다.</p>
+<pre><code class="language-javascript">// out.js
+const value = 1;
+console.log(value); // 1
+</code></pre>
+<quote-block variant="disclaimer">
+  실제로 esbuild 의 결과물이 이렇지는 않으며, 이해를 위해 단순화한 점을
+  참고해주세요.
+</quote-block>
+
+<p>Bundler는 Node.js 생태계를 필두로 JS에 서서히 꽃피던 모듈 시스템을 브라우저 JS 코드베이스 유지보수에도 원활히 사용하기 위한 노력의 산물이었습니다. Browserify, Webpack, Rollup, esbuild, turbopack... 수 많은 번들러가 출현하며 저마다의 강점과 옵션으로 무장했는데요. 핵심적인 목표는 모두 같습니다. 여러 파일을 묶어서 하나의 단일한 파일로 만들어준다는 것이죠.</p>
+<p>여기서 한 가지 중요하게 짚고 넘어가야 하는 점이 있습니다. 번들러의 Module 시스템은 Node.js 라던지 여타 Module 스펙과 근본적으로 다르다는 점입니다. 물론 CJS와 ESM은 각자의 규격이 있고 모든 번들러는 이 규격을 지킵니다. 하지만 이는 그저 번들러가 각 모듈 시스템의 규격을 &quot;지원&quot;하는 것일 뿐으로, 실제로 Node.js 등 런타임에서 모듈을 해석하고 실행하는 것과는 다소 차이가 있습니다. <strong>번들링은 애초에 런타임이 아니고, 따지자면 컴파일 타임이기 때문입니다.</strong> 예시로 들었던 esbuild는 Go로 작성되어 있는데요. 그래서 esbuild의 번들링 과정은 애초에 Node.js 상에서 실행되지도 않습니다. 따라서 이론적으로는 이런 꼴의 모듈 문법도 번들러를 만들기만 한다면 지원해줄 수 있습니다. 물론 JS 문법의 기초는 지켜야겠죠.</p>
+<pre><code>// myModule.js
+expose const value = 1;
+
+// index.js
+ask myModule in &#39;./myModule&#39;;
+console.log(myModule);
+</code></pre>
+<p>다르게 말하면, 번들링은 그저 <strong>여러 개의 텍스트 파일을 하나의 텍스트 파일로 묶는 과정</strong>일 뿐입니다. 각 원본 텍스트 파일(모듈)이 어떤 꼴의 어떤 문법이든, 번들링한 결과물만 유효한 JavaScript 이면 되는 것이죠. 이 때문에 가끔 만날 수 있는 문제가 <a href="https://github.com/webpack/webpack/issues/7425">&quot;Bundler가 해석한 모듈 참조 관계&quot;와 &quot;실제 런타임에서 수행되는 모듈 참조 관계&quot;가 서로 다른 문제</a>입니다. 물론 지금은 서버 환경의 패키지 구성에도 번들러를 사용하기도 하며, 브라우저에서 Module이 지원됨에 따라 조금씩 번들러를 사용하지 않으려는 움직임도 있습니다. 예시로 Vite는 개발 서버 실행 시 <a href="https://vitejs.dev/guide/why.html#slow-server-start">번들링 없이 native module resolution을 사용</a>하고 있어요.</p>
+<p>여기서 더 나아가면 텍스트 파일이 아닌 것들, 이를테면 이미지 등을 번들링 과정에서 함께 고려해주거나, css 혹은 html 파일도 함께 처리해주거나, 아예 번들링 과정에서 transpiling을 수행해줄 수도 있습니다. 대표적으로 esbuild는 <a href="https://esbuild.github.io/content-types/#typescript">TypeScript를 out-of-box로 지원</a>하고 있어서 번들링 과정에서 TS transpile도 함께 수행해주고 있고요. 번들러 중 최강자이자 현재까지도 현역으로 활동 중인 Webpack은 <a href="https://webpack.kr/concepts/plugins/">플러그인 시스템</a>을 통해 온갖 종류의 파일을 지원하고 또 여러개의 번들 결과물을 출력해주기도 합니다.</p>
+<p>번들러에 대한 이야기는 추후에 더 많이 할 기회가 있을 것 같습니다. 지금은 가장 중요한 포인트 두 개만 다시 짚고 이어가봅시다.</p>
+<ul>
+<li>번들러는 여러 JS 모듈을 묶어 하나(경우에 따라 여러개)의 모듈로 만들어줍니다.</li>
+<li>번들러의 모듈 참조 해석은 이론적으로 런타임의 모듈 Loader 구현과는 별개입니다(물론 의존하는 경우도 있습니다). 대개의 경우 번들링은 서버에서 실행되고, 번들된 결과물은 브라우저(클라이언트)에서 실행되므로 당연한 문제이겠지요.</li>
+</ul>
+<p>갑자기 Loader라는 단어가 나왔습니다. Loader는 런타임에서 모듈의 위치를 찾고, 해석하고, 모듈을 참조하는 쪽에 올바른 데이터를 전달하는 역할을 합니다.</p>
+<h2>## In Node.js</h2>
+<p>가장 유명하고 활발히 활용되는 JS Server Runtime인 Node.js는 CJS와 ESM을 모두 지원하여 각각의 Loader가 구현되어 있습니다. <a href="https://github.com/nodejs/node/tree/main/lib/internal/modules/cjs">CJS Loader</a>는 CJS module을 불러올 때 사용되고, <a href="https://github.com/nodejs/node/tree/main/lib/internal/modules/esm">ESM Loader</a>는 ESM module을 불러올 때 사용됩니다. 각 Loader에 대한 자세한 내용은 <a href="https://nodejs.org/api/packages.html#modules-loaders">Node.js 공식 문서</a>를 확인하는 것이 좋습니다.</p>
+<p>Node.js에서 module의 기본설정은 CJS이며 <a href="https://nodejs.org/api/packages.html#determining-module-system">특별한 조건이 달성될 경우</a> ESM으로 취급하는데요(=ESM Loader로 모듈을 불러오는데요). 간략하게 적어보겠습니다.</p>
+<ul>
+<li>모듈의 확장자가 <code>.mjs</code>.</li>
+<li><code>import</code>문으로 요청된 모듈.</li>
+<li>요청된 모듈과 가장 가까운 (동일 디렉토리 포함) 상위의 <code>package.json</code>에 <code>&quot;type&quot;: &quot;module&quot;</code> 이 명시된 경우. 아까 브라우저 script tag에서 보았던 <code>type=&quot;module&quot;</code> attribute 와 비슷하죠?</li>
+<li><code>--experimental-detect-module</code> 옵션이 켜진 상태에서 확장자가 <code>.mjs</code>도 <code>.cjs</code>도 아닌, <code>import</code>나 <code>export</code>처럼 ESM 모듈에서만 유효한 구문을 포함한 모듈.</li>
+</ul>
+<p>이 Loader들은 모두 <a href="https://github.com/nodejs/node/tree/main/lib/internal/modules">JavaScript로 구현</a>이 되어 있습니다. 잠깐 아까 CJS에 대해 이야기했던 것을 다시 떠올려봅시다. CJS의 <code>require</code>와 <code>module</code>은 그저 함수와 변수일 뿐이었습니다. 그럼 이들 함수와 변수는 언제 어디서 정의되어 있는 걸까요? 이는 스크립트의 전역 실행환경에 미리 정의된 <a href="https://github.com/nodejs/node/blob/21211a3fa93993b363f25964da5dac3282b3b453/lib/internal/modules/cjs/loader.js#L1443-L1460">Module 객체에서 모두 정의</a>하게 됩니다.</p>
+<pre><code class="language-javascript">Module.prototype._compile = function (content, filename, loadAsESM = false) {
+  // 생략
+  const dirname = path.dirname(filename);
+  const require = makeRequireFunction(this.redirects);
+  const exports = this.exports;
+  const module = this;
+  // 중략
+  result = ReflectApply(compiledWrapper, thisValue, [
+    exports,
+    require,
+    module,
+    filename,
+    dirname,
+  ]);
+  // 후략
+};
+</code></pre>
+<p>처음보는 이름들이 나왔죠? <code>_compile</code> 메서드는 <code>require</code> 함수가 불릴 때 가져와진 모듈을 평가하는 역할을 합니다. 즉 이때 <code>content</code>는 불러와진 모듈의 내용물, 텍스트가 됩니다. 해당 텍스트를 해석할 때 Module 객체에서 만든 <code>module</code>, <code>require</code> 등을 함께 주입하여 실행하게 되는 것이죠. 그리고 이 Module 전역 객체는 Node.js 내장 모듈인 <code>node:module</code> 모듈을 통해 참조할 수 있습니다.</p>
+<pre><code class="language-javascript">const Module = require(&quot;module&quot;);
+</code></pre>
+<p>그렇다면 이런 생각을 해볼 수 있습니다. 모듈을 불러오고 실행하는 코드도 결국 JavaScript이고, 해당 메서드가 스크립트 내에 존재하고 있다면, 이걸 내 코드로 바꿔칠 수는 없을까?</p>
+<pre><code class="language-javascript">const originalCompiler = Module.prototype._compile;
+
+Module.prototype._compile = function (args) {
+  console.log(&quot;I&#39;m patched _compile!&quot;);
+  return originalCompiler(...args);
+};
+</code></pre>
+<p>실제로 CJS Loader에 대한 Node.js 문서에는 &quot;<a href="https://en.wikipedia.org/wiki/Monkey_patch">monkey patching</a> 가능함&quot;이라고 적혀있습니다. 즉 런타임에 의도적으로 CJS Loader의 동작을 수정할 수 있습니다. 예를 들어 CJS Loader는 JS, JSON, Native Addon 만 지원하지만 PNG 파일에 대한 지원도 가능하도록 만들어볼 수도 있을 겁니다.</p>
+<pre><code class="language-javascript">Module._extensions[&quot;.png&quot;] = function (_, filename) {
+  return filename;
+};
+
+require(&quot;./image.png&quot;); // &quot;./image.png&quot;
+</code></pre>
+<p>별로 재미는 없는 Loader 확장이지만, 이 코드가 실행되고 나면 이후에 등장하는 require는 <code>.png</code> 파일을 가져올 수 있게 됩니다. 물론 반환하는 값은 specifier 뿐이겠지만요.</p>
+<p>아쉽게도 ESM Loader는 이렇게 Monkey patching을 할 수는 없습니다. 대신 Loader Hook이라는 새로운 인터페이스를 통해 ESM Loader를 조작하는 방법을 제공하고 있어요. 자세한 내용은 <a href="https://nodejs.org/api/module.html#customization-hooks">여기 공식 문서</a>를 참고해보세요.</p>
+<quote-block>
+  Node.js는 preload script를 지정할 수 있는 옵션을 3개 갖고 있습니다. CJS
+  script를 위한
+  [`--require`](https://nodejs.org/docs/latest/api/cli.html#-r---require-module)
+  옵션은 Node.js 1.6부터 있었고, Node.js 8.8.0에 ESM script를 위한
+  [`--(experimental-)loader`](https://nodejs.org/docs/latest/api/cli.html#--experimental-loadermodule)
+  옵션이 추가됩니다. `--loader`라는 이름에서 알 수 있듯 단순히 preload만을 하는
+  것이 아니라 Customization hook을 거는데 특화된 스크립트를 지정할 수 있는
+  옵션이었습니다. `--require`와 달리 preload, Hook registration 2개의 책임을
+  갖고 있었던 것이죠. 그래서 Node.js 20.6.0에서 이 옵션은
+  [`--import`](https://nodejs.org/docs/latest/api/cli.html#--importmodule)로
+  대체되었습니다. `--import`는 `--require`처럼 preload 만을 하며, 그저 CJS
+  script가 아닌 ESM script를 받는다는 차이점만 있습니다. 훨씬 간단해졌죠!
+</quote-block>
+
+<quote-block>
+  `--import` 혹은 `--loader` 옵션이 사용될 경우 entrypoint script가 항상 [ESM
+  Loader를 통해
+  해석된다](https://github.com/nodejs/node/blob/0fb512344fe97b508adf1332c3e82d33937c4669/lib/internal/modules/run_main.js#L52-L87)는
+  점을 기억하세요.
+</quote-block>
+
+<p>CJS Loader Monkey patching과 Customization Hook을 이용해 재밌는 아이디어를 떠올려볼 수도 있습니다: 아예 근본적으로 <code>node_modules</code>를 쓰지 말고, 모듈의 위치를 우리 마음대로 정하고 거기서 가져오게 만들면 어떨까요? 아까 Node.js는 <code>node_modules</code>를 순회한다고 했습니다. 게다가 file I/O가 빈번하게 발생하기 때문에 속도도 굉장히 느릴겁니다(물론 한 번 가져온 모듈은 캐싱이 됩니다만). 아예 순회를 하지 않게 할 수 있다면요? Loader 동작은 스펙만 지킨다면 마음대로 수정할 수 있으니까 불가능한 일이 아니죠. <strong>이 아이디어를 구현한 것이 yarn berry 의 Plug and Play, 일명 pnp 방식입니다.</strong> 이 이야기를 하기 전에 먼저 패키지 매니저에 대해 조금 더 자세히 들여다볼 필요가 있겠네요.</p>
+<h2># Other Package Managers</h2>
+<p>npm이 가장 유명한 Package manager지만, 외에도 여러 package manager들이 있습니다. 대표적으로 yarn, pnpm이 있습니다. 이들은 어떻게 Package와 Module을 관리할까요?</p>
+<h2>## pnpm</h2>
+<p>pnpm은 Performant npm의 약자입니다. 성능에 집중한 npm의 변종인데요. pnpm은 기본적으로 npm 과 같지만, <code>node_modules</code> 를 구성하는 방식이 다릅니다. 앞서 말했듯 <code>node_modules</code>에는 패키지의 의존성이 모두 담겨있는데요. pnpm이 의존성들을 global cache 라는 통합된 공간에 저장하고 각 패키지의 <code>node_modules</code>에 <a href="https://en.wikipedia.org/wiki/Symbolic_link">symbolic link</a>를 걸어둡니다. pnpm 공식 문서의 <a href="https://pnpm.io/motivation">Motiviation</a>에 더 자세한 이야기가 있습니다.</p>
+<p><code>node_modules</code>를 구성하는 방법을 제외하면 npm과 똑같으므로 pnpm을 사용할 때는 특별히 더 고려할 것이 없습니다. 사실, pnpm을 안 쓸 이유가 없는 셈이죠!</p>
+<h2>## yarn</h2>
+<p>yarn은 3 가지의 Module 관리 방식을 제공합니다. 첫 번째는 일반적인 Node.js 의 방식인 node_modules, 두 번째는 pnpm의 방식, 세 번째는 pnp 방식입니다. 첫 번째와 두 번째는 앞서 설명했으니 이제 세 번째인 pnp 방식을 알아보겠습니다.</p>
+<p>yarn pnp 는 yarn berry에서 처음 소개되었습니다. yarn 2 이후의 버전을 yarn berry로 칭하는데요. 실제로 GitHub의 yarn repository는 <a href="https://github.com/yarnpkg/yarn">yarn classic(~1.x)</a>과 <a href="https://github.com/yarnpkg/berry">yarn berry(2.x~)</a>로 분리되어 있습니다. pnp를 사용하려면 yarn의 설정파일인 <code>.yarnrc.yml</code>에 다음을 추가해주면 됩니다. 물론 yarn의 버전이 2 이상인지 확인해야겠죠.</p>
+<pre><code class="language-yaml">nodeLinker: &quot;pnp&quot;
+# 참고로, pnpm이나 일반적인 Node.js 방식을 쓰고 싶다면 아래처럼 하면 됩니다.
+# nodeLinker: &quot;pnpm&quot;
+# nodeLinker: &quot;node_modules&quot;
+</code></pre>
+<p>설정을 완료하면 <code>yarn install</code>을 진행했을 때 전에는 보지 못했던 새로운 파일이 2개 생깁니다. <code>.pnp.cjs</code>와 <code>.pnp.loader.mjs</code>인데요. 이 두 파일은 각각 <code>--requier</code>와 <code>--loader</code> 옵션에 전달하여 preload 스크립트로 활용할 수 있습니다.</p>
+<pre><code class="language-bash">node --require ./.pnp.cjs --experimental-loader ./.pnp.loader.mjs index.js
+</code></pre>
+<p>혹은, <code>yarn</code>을 사용하면 옵션을 부여하지 않아도 <a href="https://github.com/yarnpkg/berry/blob/c64644ae88ba42090ab9b87da0b09601d4218b0c/packages/yarnpkg-core/sources/Project.ts#L713-L727">자동으로 두 스크립트를 찾아서 처리</a>해줍니다.</p>
+<pre><code class="language-bash">yarn node index.js
+</code></pre>
+<p>이 두 스크립트는 어떤 일을 할까요? yarn pnp는 <code>node_modules</code> 대신 <a href="https://yarnpkg.com/configuration/yarnrc#cacheFolder"><code>.yarn/cache</code>라는 디렉토리</a>를 사용합니다. 혹은 <a href="https://yarnpkg.com/configuration/yarnrc#enableGlobalCache">global cache를 활성화</a>한 상태라면 pnpm과 비슷하게 전역으로 활용되는 디렉토리를 사용합니다. 이 디렉토리는 기본적으로 Node.js가 관심갖지 않는 디렉토리이므로 만약 아무것도 하지 않은 채로 스크립트를 실행시킨다면 런타임은 패키지를 찾아오지 못해 에러를 던질 겁니다. <code>.pnp.cjs</code>와 <code>.pnp.loader.mjs</code>는 패키지에 대한 요청이 발생했을 때 해당 specifier를 <code>.yarn/cache</code> 디렉토리에서 찾아 가져오는 역할을 해줍니다.</p>
+<p>이를 위해서는 <code>require</code>를 수정하거나 Loader Customization Hook을 이용해야 할 겁니다. <code>.pnp.cjs</code>는 위에서 예시로 들었던 것과 동일한 방식으로 <a href="https://github.com/yarnpkg/berry/blob/c64644ae88ba42090ab9b87da0b09601d4218b0c/packages/yarnpkg-pnp/sources/loader/applyPatch.ts#L61">CJS Loader를 Monkey patch</a> 합니다. <code>.pnp.loader.mjs</code> 또한 마찬가지로 <a href="https://github.com/yarnpkg/berry/blob/c64644ae88ba42090ab9b87da0b09601d4218b0c/packages/yarnpkg-pnp/sources/esm-loader/loader.ts#L5-L6">Customization Hook을 이용해 ESM Loader를 조작</a>합니다.</p>
+<p>pnp 자체의 패키지 resolving 알고리즘에 대한 것은 <a href="https://yarnpkg.com/advanced/pnp-spec">PnP Specification</a>을 참고해주세요. yarn은 pnp의 스펙에 대해 이렇게 체계적으로 문서화해 두었기 때문에, pnp 방식의 패키지 관리를 사용하기 위해 꼭 yarn을 사용할 필요는 없습니다. 대표적으로 <a href="https://github.com/evanw/esbuild/pull/2451">esbuild는 자체적으로 pnp 알고리즘을 내장</a>해두었어요.</p>
+<h2># Conclusion</h2>
+<p>JavaScript의 Module과 Package, 그리고 각 시스템이 구현된 환경과 커스터마이징 옵션들에 대해 알아보았습니다. 한 번 다시 요약해보겠습니다.</p>
+<ul>
+<li>JavaScript에는 Module 시스템이 있습니다. 브라우저 JavaScript는 Module을 지원합니다.</li>
+<li>Server side JavaScript(Node.js 등)는 Module 시스템을 두 가지 이상 지원합니다. 대표적으로 Node.js는 CJS라는 JavaScript 표준 Module 제정 이전의 커스텀 Module 시스템을 지원하며, 동시에 현행 표준 Module도 지원합니다.</li>
+<li>Server side JavaScript는 <code>node_modules</code>와 <code>package.json</code>을 통해 패키지 시스템을 제공합니다.</li>
+</ul>
+<p>긴 글이었지만 아직 하지 못한 이야기들이 있는데요.</p>
+<ul>
+<li>Deno는 Package와 Module을 어떻게 관리할까요? Deno는 package.json을 아예 배격했었는데 말이에요.</li>
+<li>TypeScript는 Module system을 어떻게 이해할까요? 이는 <code>tsconfig.json</code>의 <code>module</code>과 <code>moduleResolution</code> 옵션으로 정할 수 있습니다.</li>
+</ul>
+<p>연관되는 더 깊은 내용은 다음 글에서 다루어볼 수 있으면 좋겠네요. 읽어주셔서 감사드리고, 질문이나 오류 지적은 댓글을 꼭 남겨주세요! 👋</p>
+
+    </div>
+
+    <div id="comment-container">
+      <script
+        src="https://giscus.app/client.js"
+        data-repo="jwoo0122/jinwoojeo.ng"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkyMjg2MDUwNDM="
+        data-category="Announcements"
+        data-category-id="DIC_kwDODaA8c84C2d2j"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async></script>
+    </div>
+
+    <footer class="footer">
+      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
+      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+    </footer>
+  </main>
+  <script type="module" src="/js/components.js"></script>
+  <script type="module">
+    import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js';
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

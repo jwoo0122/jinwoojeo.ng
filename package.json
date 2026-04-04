@@ -1,47 +1,14 @@
 {
   "name": "jinwoojeo.ng",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "check": "astro check",
-    "prepare": "husky install",
-    "lint": "eslint ."
+    "convert": "node convert.mjs --all",
+    "serve": "python3 -m http.server 4321"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.6",
-    "@astrojs/mdx": "4.3.13",
-    "@astrojs/rss": "4.0.15",
-    "@astrojs/sitemap": "^3.7.0",
-    "@atproto/api": "^0.18.21",
-    "@atproto/common": "^0.5.11",
-    "@eslint/js": "^9.5.0",
-    "@iconify-json/octicon": "^1.1.55",
-    "@tailwindcss/typography": "^0.5.13",
-    "@tailwindcss/vite": "^4.2.1",
-    "@types/eslint__js": "^8.42.3",
-    "astro": "5.18.0",
-    "astro-icon": "^1.1.0",
     "gray-matter": "^4.0.3",
-    "husky": "^8.0.3",
-    "prettier": "^3.3.2",
-    "prettier-plugin-astro": "^0.14.0",
-    "sass": "^1.77.6",
-    "sharp": "^0.33.4",
-    "tailwindcss": "^4.2.1",
-    "typescript": "^5.5.2",
-    "typescript-eslint": "^7.14.1",
-    "vite": "^5.3.1"
-  },
-  "packageManager": "pnpm@10.6.3+sha256.bc1efe92ee4d40b1a7a644e5ca9e1855c5c5eafc6b1512f9017b31b9245419db",
-  "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-plugin-astro": "^1.2.2",
-    "knip": "^5.40.0"
+    "marked": "^17.0.5"
   }
 }

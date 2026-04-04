@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/cat.ico">
+  <link rel="canonical" href="https://jinwoojeo.ng/posts/2302090/">
+  <title>선언과 명령</title>
+  <meta name="title" content="선언과 명령">
+  <meta name="description" content="읽고 쓰기 쉬운 코드를 작성하려면 무엇을 고민해야 할까요?">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jinwoojeo.ng/posts/2302090/">
+  <meta property="og:title" content="선언과 명령">
+  <meta property="og:description" content="읽고 쓰기 쉬운 코드를 작성하려면 무엇을 고민해야 할까요?">
+  <meta property="og:image" content="/images/2302090.jpg">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://jinwoojeo.ng/posts/2302090/">
+  <meta property="twitter:title" content="선언과 명령">
+  <meta property="twitter:description" content="읽고 쓰기 쉬운 코드를 작성하려면 무엇을 고민해야 할까요?">
+  <meta property="twitter:image" content="https://jinwoojeo.ng/images/2302090.jpg">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script>
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const set = (dark) => document.documentElement.classList.toggle('dark', dark);
+    mq.addEventListener('change', (e) => set(e.matches));
+    set(mq.matches);
+  </script>
+</head>
+<body>
+  <main class="container">
+    <div class="header">
+      <span class="site-title">Jinwoo Jeong</span>
+      <a class="nav-link" href="/">About</a>
+      <a class="nav-link" href="/posts">Posts</a>
+      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
+    </div>
+
+    <h1 class="post-title">선언과 명령</h1>
+    <div class="post-meta">
+      <time>February 9, 2023</time><span> / 9min</span>
+    </div>
+    <div class="post-spacer"></div>
+    <div class="prose">
+      <p>언어는 형식을 갖고 있습니다. 흔히 예로 드는 육하원칙이 있죠. &quot;영희가 밥을 먹었다.&quot;&quot; 행위의 주체와 목적, 그리고 행위 자체에 대한 의미를 담고 있습니다. 이처럼 무언가를 표현할 때 우리는 형식을 갖춘 언어를 만들어 대화합니다.</p>
+<p>복잡한 의미를 전달하기 위해선 복잡한 형식이 필요합니다. 수능 영어 지문을 읽어본 적이 있나요? &quot;존은 학교를 다닌다.&quot; 이걸 수능 영어에서는 이렇게 표현합니다.</p>
+<quote-block>
+  사도 요한으로부터 유래한 흔한 영미권 남자 이름인 John을 가진 남성 -애칭은
+  Johnny인데- 은, 또래의 사람과 함께 어울리며 사회화를 위한 필수적인 교육을
+  진행하는 공립 혹은 사립 교육 시설에 정식으로 등록되어 일주일에 약 5회 정도
+  정기적인 교습을 받고 있다.
+</quote-block>
+
+<p>읽기 편한가요? 앞 부분의 내용은 아무래도 몰라도 괜찮은 John 의 유래를 설명하고 있습니다. 그리고 학교를 설명하는 부분은 너무 장황하고, 굳이 그 구체적인 내용을 몰라도 문제가 되지 않습니다. 일주일에 몇 번 가는지도 사실 알고 싶지 않죠. 게다가 5회라는 것도 너무 임의적입니다. 학교 방침에 따라선 6회일 수도, 4회일 수도 있으니까요.</p>
+<p>코드를 쓰는 것도 이와 마찬가지입니다. 쓸데없는 내용은 요약하거나 감추고, 지금 읽고 있는 코드에서 <strong>관심</strong>을 갖는 부분만 짚어서 보여주는 것이 좋습니다.</p>
+<pre><code class="language-rust">struct 학교 {
+  등교횟수: 5;
+};
+
+impl 학교 {
+  fn 등교(&amp;self) {
+    self.등교횟수 만큼 간다;
+  };
+};
+
+let John = 사도 요한으로부터 유래한 흔한 영미권 남자 이름;
+
+John &amp;&amp; 학교.등교();
+</code></pre>
+<p>프로그래머는 글을 구조적으로 단단하게 작성하는 연습을 해야 한다고 생각합니다. 그래서 우리는 클린 코드, 클린 아키텍처와 같은 다양한 교양 서적을 읽으며 어떻게 하면 더 좋은 글을 작성할 수 있을지 고민합니다. 저는 지난 4년간 코드를 작성하면서 나름대로 좋은 코드에 대한 기준을 갖게 되었고, 그것을 공유해보고자 합니다. 사실 글을 쓰는 도중에도 &#39;이걸로 충분할까?&#39; 싶은 생각이 계속 들지만, 이렇게 정리해두고 먼 나중에 다시 읽어보는 건 많은 도움이 되더라구요.</p>
+<h2>좋은 코드?</h2>
+<p>코드에 있어서 &#39;좋다&#39;는 건 뭘까요? 성능이나 새로운 아키텍처 혹은 신 패러다임의 도입 등 많은 기준이 있지만 이 글에서는 읽고 쓰는 글로서의 좋은 코드를 이야기하려고 합니다. 전 좋은 코드란 좋은 글과 똑같다고 생각합니다. 읽기 쉽고, 앞 뒤 맥락과 연결해 이해하기 쉽다는 특징이 있죠. 한가지 더 덧붙인다면 수정하기 쉬워야 한다는 점도 있을 것 같습니다. 보통의 글은 읽기만 할 뿐 수정해야 하는 경우가 많지 않지만, 코드는 살아있는 생물처럼 계속해서 관심주고 다듬어야 한다는 차이가 있으니까요. 따라서 좋은 코드를 정의해본다면,</p>
+<ol>
+<li>읽기 쉬워야 합니다.</li>
+<li>이해하기 쉬워야 합니다.</li>
+<li>수정하기 쉬워야 합니다.</li>
+</ol>
+<p>사실 다 같은 이야기 같네요.</p>
+<p>그렇다면 읽기 쉬운 코드란 무엇인가요? 읽기 쉬운 글은 보통 <em>약속을 잘 지킨 글</em>이라고 생각합니다. 여기서 약속이란 &quot;A는 이것이고, B는 저것이다&quot;라고 단어와 그 의미를 연결해 놓은 것을 의미합니다. 언어의 사회성이라고 유식하게 표현하기도 하죠. 물론 보통의 언어를 설명할 때 그렇고, 코드에서는 &quot;A는 이것을 하고, B는 저것을 한다&quot;라고 번역할 수 있겠습니다. 코드를 읽다보면 많은 함수와 변수를 만나게 됩니다. 이들을 단어라고 본다면, 각각의 단어가 의미하는 바를 명확히 이해할 수 있다면 약속이 잘 지켜진, 읽기 쉬운 코드라고 할 수 있지 않을까요?</p>
+<p>예시를 들어보겠습니다.</p>
+<pre><code class="language-javascript">function addOne(x) {
+  return x + 2;
+}
+
+let num = 1;
+num = addOne(num);
+</code></pre>
+<p>뭔가 이상하지 않나요? <code>addOne</code> 함수는 &quot;1을 더한다&quot;는 이름을 갖고 있으므로, 이 함수를 실행하면 1이 더해진 값을 얻을 수 있다고 생각하게 됩니다. 그런데 이 함수는 사실 2를 더하고 있습니다. 이 문제를 단순히 &quot;이름이 잘못되었구나&quot;로 생각하면 안됩니다.</p>
+<pre><code class="language-typescript">async function createNode() {
+  const res = await fetch&lt;string&gt;(&quot;https://path/to/api&quot;);
+  const spanElement = document.createElement(&quot;a&quot;);
+
+  spanElement.appendChild(document.createTextNode(res));
+  spanElement.click();
+}
+</code></pre>
+<p>이 함수는 너무 많은 일을 하고 있습니다. 이름은 그저 createNode 일 뿐인데, 서버로부터 데이터를 가져오고 이를 anchor tag 에 담고 tag 의 클릭 이벤트를 유발하는 것까지 모두 하고 있어요. 이것은 마치 해리포터 전 권의 내용을 &quot;소년이 끝내주는 마법을 쓴다&quot;고 요약해버린 것과 비슷합니다. 좀 더 우아하게 표현한다면 <strong>추상을 너무 많이 했다</strong>고 표현할 수 있겠죠. 더 길고 장황한 예시를 즉석에서 떠올리기 어렵네요. 핵심은 코드의 각 조각은 목적을 분명하게 하고, 이를 잘 드러내는 이름을 가져야 한다는 것입니다. 이 코드는 비동기 요청을 처리하는 코드, element 를 만드는 코드, click 을 발생시키는 코드로 쪼개어서 생각해야 합니다. 물론 코드란 늘 맥락에 맞게 판단해야 하므로 언제나 이렇게 분할해서 작성할 필요는 없겠지만요.</p>
+<h2>선언적인 코드</h2>
+<p>영어로는 declarative code 라고 합니다. 선언적이라는 것은 말 그대로 무엇인가를 추상화하여 정의하고 이를 단언한다는 것으로, 자세한 구현과 방식을 알지 못하더라도 의도를 표현하는 것을 말합니다. 여기서 &quot;알지 못한다&quot;는 것은 그 동작이 존재하지 않는다는 것이 아닙니다. 제가 처음 선언적인 코드에 대해 공부할 때는 &quot;아니 그럼, 이 선언을 이해하는 녀석은 대체 뭔데?&quot;라는 생각을 자주 했는데요. 이것은 틀린 질문입니다. 우리가 코드를 쓸 때는 이 &quot;이해하는 녀석&quot; 즉, compiler 혹은 내부 구현에 관심을 갖지 않습니다. 그것을 그저 신뢰합니다. 앞서 말한 약속을 잘 지킨 코드베이스라면 문제없겠죠. 이것이 선언적인 코드의 핵심이라고 생각해요.</p>
+<quote-block>
+  발목 근육을 이용해 발을 곧게 펴고 허벅지 근육으로 다리를 들어올린 다음 체중을
+  앞으로 전달시켜 신체가 전진하게 만들고...
+</quote-block>
+
+<p>아, 너무 복잡하고 어려워요. <em>이해하기 힘들어요.</em> 하지만 적절하게 추상화된, 약속이 잘 지켜진, 선언적인 API 가 제공된 환경이라면...</p>
+<p><quote-block>걷는다</quote-block></p>
+<p>라고 표현할 수 있겠죠? 정말 이해하기 쉬운 문장, 아니 코드가 되었습니다.</p>
+<h2>추상화, 그리고 관심사 분리</h2>
+<p>그런데 아직 미심쩍은 부분이 있습니다. 신뢰를 잘 지킨 코드 베이스, <em>추상화가 적절하게 이루어진 선언적인 인터페이스를 갖춘</em> 코드 베이스는 어디서 난거죠? 그 답은 이미 당신도 알고 있습니다. 우리가 만들었어요. 지금 제가 적고 있는 이 글도 굉장히 멋지게 추상화된 코드 베이스 위에서 작성되고 있습니다. 제 블로그 소스 코드가 멋있다는 이야기가 아닙니다. 언어는 형식이 있다고 맨 처음에 말했었습니다. 이 글은 한국어를 사용하는 이 사회의 구성원이 합의한 표준 문법과 어휘를 사용해 작성되었습니다. 이 한국어가 바로 선언적인 인터페이스라고 할 수 있는 것이죠. 이미 앞선 설명에서도 추상화를 통한 선언적인 어휘가 몇 번 나왔습니다. 신뢰를 잘 지킨 코드를 &quot;추상화된 코드&quot;로 적절히 번역했었죠. 물론 추상화의 학술적인 정의는 더 정교하고 구체적이겠지만 제 설명에서는 그렇다는 이야기입니다.</p>
+<p>동작을 추상화 할 때는 어디까지 추상화 할 것인지 정하는 것이 매우 중요합니다. 앞선 예시처럼 해리포터 전 권을 &quot;끝장나는 마법&quot;으로 요약해버리면 아무 의미가 없는 추상화가 됩니다. 내용을 이해하기 위해선 결국 모든 책을 펼쳐봐야 하니까요. 사실 해리포터는 이미 각 권의 부제에 정말 멋지게 추상화가 되어 있습니다. 마법사의 돌, 불사조 기사단, 죽음의 성물. 각 권의 상징이자 핵심 소재가 표면에 드러나 있기 때문에 내용을 완벽하게 숙지하지 않더라도 &quot;적당히 죽음의 성물 때문에 무슨 사단이 나겠구만&quot; 할 수 있는 겁니다.</p>
+<p>다르게 말하면 추상화는 <strong>관심사의 분리</strong>를 분명히 해야 합니다. 어떤 코드가 너무 많은 관심사, 책임을 갖고 있다면 후에 이를 수정 혹은 교체하는 순간에 관심갖고 있지 않은 코드까지 건드리게 될 위험이 있습니다. 이러한 코드들을 서로 분리시켜 책임의 영역을 확실하게 매듭짓고, 수정하는 사람이 관심을 갖고 있는 부분만 수정해도 원하는 동작을 달성할 수 있도록 만드는 것이 추상화와 관심사 분리의 핵심입니다.</p>
+<pre><code class="language-jsx">function TestComponent() {
+  const [text, setText] = useState(&quot;뭐든지 보여주기&quot;);
+
+  return (
+    &lt;div&gt;
+      &lt;button
+        onClick={async () =&gt; {
+          alert(&quot;클릭해주셔서 감사합니다!&quot;);
+          const res = await fetch(&quot;/path/to/api&quot;);
+          setText((prev) =&gt; prev + res);
+        }}
+      &gt;
+        클릭하기
+      &lt;/button&gt;
+      &lt;span&gt;{text}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>이 코드의 관심사를 분리해본다면 (물론 여러가지 방법이 있습니다만)</p>
+<pre><code class="language-jsx">const TEXT_RES_PATH = &#39;/path/to/api&#39;
+
+async function fetchText() {
+  return fetch(TEXT_RES_PATH);
+}
+
+function useText() {
+  const [text, setText] = useState(&#39;뭐든지 보여주기&#39;);
+
+  const changeTextFromServer = () =&gt; {
+    alert(&quot;클릭해주셔서 감사합니다!&quot;);
+    const res = await fetchText();
+    setText((prev) =&gt; prev + res);
+  }
+
+  return [text, changeTextFromServer];
+}
+
+function TextComponent() {
+  const [text, changeTextFromServer] = useText();
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={changeTextFromServer}&gt;클릭하기&lt;/button&gt;
+      &lt;span&gt;{text}&lt;/span&gt;
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>훨씬 깔끔해졌습니다. 왜 더 깔끔해졌냐구요?</p>
+<pre><code class="language-jsx">// Before
+function TestComponent() {
+  const [text, setText] = useState(&quot;뭐든지 보여주기&quot;);
+
+  return (
+    &lt;div&gt;
+      &lt;button
+        onClick={async () =&gt; {
+          alert(&quot;클릭해주셔서 감사합니다!&quot;);
+          const res = await fetch(&quot;/path/to/api&quot;);
+          setText((prev) =&gt; prev + res);
+        }}
+      &gt;
+        클릭하기
+      &lt;/button&gt;
+      &lt;span&gt;{text}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}
+
+// After
+function TextComponent() {
+  const [text, changeTextFromServer] = useText();
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={changeTextFromServer}&gt;클릭하기&lt;/button&gt;
+      &lt;span&gt;{text}&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<p>TextComponent 만 본다면 이는 나름대로 잘 정리한 코드가 되었다고 볼 수 있습니다. <code>useText</code> hook 은 텍스트를 서버에서 가져오고 업데이트하는 역할을 갖지만 그것이 어떻게 사용될지에 대해서는 책임을 갖고 있지 않고, <code>TextComponent</code>는 텍스트가 어디서 어떻게 변화해 오는지 자세히 모르지만 어쨌든 의도한 대로 업데이트 될 것이라고 믿고 change 핸들러를 사용할 수 있습니다.</p>
+<p>또한 추후 useText 혹은 TextComponent 를 수정해야 할 일이 생긴다면, 해당 수정 목적에 따라 격리된 나머지 코드를 제외하고 지금 <strong>관심을 갖는</strong> 부분만 수정하면 됩니다. 책임의 영역을 변경하지 않으면서 말이죠. 만약 변경 이전의 코드를 수정해야 했다면 text 가 구체적으로 어디서 어떻게 사용되는지, api path 는 누가 또 쓰고 있는지, 혹시 onClick 로직이 다른 곳에도 똑같이 구현되어 있는데 내가 깜빡하고 여기만 바꾸는 것은 아닌지 수많은 생각을 해야 할 겁니다.</p>
+<p>이것이 추상화의 힘이자, 선언적인 인터페이스의 편리함입니다. React 의 hook 이 각광을 받고 class Component 를 밀어낸 것도 (더 많은 이유가 있겠지만) 이 때문입니다. 특정한 책임을 갖는 코드를 hook 내부로 옮겨서 선언적으로 활용하도록 만들고, 또 재사용까지 할 수 있게 만들었습니다. 굉장히 멋진 기능이죠.</p>
+<p>다만 제가 보여드린 예시의 내용은 이렇게 오해되면 안될 것 같습니다: &quot;어쨌든 적당히 길고 복잡해보이는 로직을 함수로 빼라는 거지?&quot; 이것은 반만 맞는 이야기입니다. 보통 길고 복잡해보이는 코드는 여러가지 책임이 혼합되어 있기 때문에 적절하게 쪼개는 것이 맞습니다. 단 이를 통째로 어딘가로 보내서 숨겨버리면 된다는 의미는 아닙니다. 아까 말한 것처럼 추상화의 방법과 정도, 영역은 코드의 주변 맥락과 사용처를 보고 판단해야 합니다. 그래서 코드리뷰라는 과정이 있기도 하죠. 같은 코드의 추상화 정도, 선언적으로 다듬어진 인터페이스를 보고 &quot;난 괜찮은 것 같아&quot;라고 생각할 수도 있고 &quot;책임이 너무 커&quot;라고 생각할 수도 있고 &quot;더 추상화해야 돼&quot;라고 생각할 수도 있죠. 일종의 연습이 필요한 부분이라고 생각합니다.</p>
+<p>정리하자면 추상화는 명령형으로 작성하는, 구체적인 동작을 일일이 나열하는 코드를 <strong>관심사 기준으로 응집, 분리</strong>하여 선언적인 코드의 작성을 도와주는 기법이라고 할 수 있습니다. 선언적인 코딩이란 그 하위 영역의 구체적인 동작을 알지 못하는 상태에서 <strong>더 큰 규모의 동작을 간결하고 집약적으로 작성하는 것</strong>이구요. 이것이 읽기 쉽고, 이해하기 쉽고, 수정하기 쉬운 코드를 만든다고 생각합니다.</p>
+<h2>그러나 모두 상대적</h2>
+<p>자신만만하게 JavaScript 코드 두 개를 보여드리며 &quot;제가 추상화를 했습니다, 짜잔!&quot;, &quot;이전 코드는 너무 명령적으로 작성되어서 보기 불편합니다&quot;라고 이야기 했지만 이것은 JavaScript 개발자 입장에서의 이야기입니다. JavaScript 는 각 시스템에 알맞는 JavaScript 엔진에 의해 더 낮은 수준의 코드로 재해석, interpret 되어 실행됩니다. 예를 들자면 C++ 로 작성된 Node.js 의 V8 엔진이 있겠죠. Node.js 내부를 유지보수하는 개발자에게 JavaScript 는 상당히 선언적인 영역이라고 할 수 있습니다. 매우 복잡한 메모리 및 스레드 관리와 같은 내부 구현을 모두 무시하고 &quot;1+1을 해&quot;라고 말하는 영역이니까요. 마찬가지로 C++ 또한 C++ 컴파일러를 개발하는 사람에겐 선언적일 겁니다. C++ 컴파일러 개발자는 각 아키텍처, 즉 ARM 이나 AMD 혹은 Intel CPU 등에 알맞게 C++ 코드를 해석하고 프로세서가 이해할 수 있는 어셈블리어 혹은 CPU 인스트럭션으로 연결해주어야 할 것이니까요.</p>
+<p>저수준 컴파일러의 역할이나 구현에 대해 자세히 파악하지는 못하기에 설명이 다소 비약적일 수는 있습니다만, 중요한 것은 무엇이 선언적이다 혹은 명령적이다를 평가하기 위해서는 기준이 필요하다는 겁니다. 이 코드가 선언적이라고 말하려면 그에 대비되는 명령적인 레이어, 즉 선언을 구현하는 추상화된 어떤 영역을 먼저 가리킬 수 있어야 합니다. 우리가 아무리 코드를 선언적으로 작성한다고 해도 &quot;버튼을 누른다&quot;고 생각하는 사용자에게는 아주 복잡하고 이해하기 어려운 명령적인 영역일 수 밖에 없습니다. 따라서 좋은 코드를 작성하기 위해선 이미 만들어진 선언적인 영역을 잘 활용함과 동시에, 코드의 응집도와 의존도를 알맞는 수준으로 관리하여 또 다시 이 코드를 사용하게 될 어딘가의 사용처에서 선언적으로 의심없이 사용할 수 있도록 다듬어진 인터페이스를 제공해야 합니다.</p>
+<hr>
+<p>4년 전의 저는 &quot;왜 React hook 이 이렇게 인기가 있지?&quot; 라고 생각했었습니다. 컴포넌트를 쪼개라고 해서 쪼개고는 있는데, 사실 이거 그냥 한 컴포넌트에 우겨 넣어도 되는거 아니야? 라고 생각하기도 했습니다. 코드를 언제 분리해야 하는지 몰라서 파일이 300줄이 넘어가면 다른 파일로 분리하자는, 지금 생각하면 여러모로 많이 부족한 기준을 세우기도 했었습니다. 그땐 제대로 된 프로그래밍이 처음이었으니까요.</p>
+<p>필드에 따라 다소의 차이는 있지만 엔지니어링은 수학 문제를 푸는 것처럼 답이 나오면 풀이과정을 지워도 되는 것이 아닙니다. 코드는 매 순간 새로운 동작을 요구받고, 이들을 모두 우아하게 수용하면서 오랫동안 살아남으려 노력합니다. 결국 좋은 코드란 적응을 잘 하는 코드이고, 그런 코드는 필요할 때에 몸의 형태를 이리저리 바꾸거나 필요없는 부분을 뜯어낼 수 있어야 한다고 생각합니다. 직교적인 설계라고 표현하기도 하죠. 코드베이스가 크면 클 수록 이런 부분이 중요해질 겁니다.</p>
+<p>아마 지금의 제가 꾹꾹 눌러 작성한 이 글도 몇 년 뒤의 제가 다시 읽어보면 군데군데 건너뛰거나 생략된 부분들이 거슬리게 될 지도 모르겠습니다. 어쩌면 이 글을 읽고 있는 당신도 그런 감정을 느끼고 있을 수도 있겠죠.</p>
+<p>좋은 코드에 대해 선언적인 코드와 추상화, 그리고 그에 반대되는 명령적인 코드를 비교하면서 이야기해보았습니다. 읽어주셔서 감사드리고, 당신의 의견도 궁금하네요. ;)</p>
+
+    </div>
+
+    <div id="comment-container">
+      <script
+        src="https://giscus.app/client.js"
+        data-repo="jwoo0122/jinwoojeo.ng"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkyMjg2MDUwNDM="
+        data-category="Announcements"
+        data-category-id="DIC_kwDODaA8c84C2d2j"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async></script>
+    </div>
+
+    <footer class="footer">
+      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
+      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+    </footer>
+  </main>
+  <script type="module" src="/js/components.js"></script>
+  <script type="module">
+    import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js';
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

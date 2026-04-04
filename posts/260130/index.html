@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/cat.ico">
+  <link rel="canonical" href="https://jinwoojeo.ng/posts/260130/">
+  <title>가능과 의도의 차이</title>
+  <meta name="title" content="가능과 의도의 차이">
+  <meta name="description" content="적자생존과 지적설계의 어딘가에서 엔지니어링하는 법">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jinwoojeo.ng/posts/260130/">
+  <meta property="og:title" content="가능과 의도의 차이">
+  <meta property="og:description" content="적자생존과 지적설계의 어딘가에서 엔지니어링하는 법">
+  <meta property="og:image" content="/images/260130.jpg">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://jinwoojeo.ng/posts/260130/">
+  <meta property="twitter:title" content="가능과 의도의 차이">
+  <meta property="twitter:description" content="적자생존과 지적설계의 어딘가에서 엔지니어링하는 법">
+  <meta property="twitter:image" content="https://jinwoojeo.ng/images/260130.jpg">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script>
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const set = (dark) => document.documentElement.classList.toggle('dark', dark);
+    mq.addEventListener('change', (e) => set(e.matches));
+    set(mq.matches);
+  </script>
+</head>
+<body>
+  <main class="container">
+    <div class="header">
+      <span class="site-title">Jinwoo Jeong</span>
+      <a class="nav-link" href="/">About</a>
+      <a class="nav-link" href="/posts">Posts</a>
+      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
+    </div>
+
+    <h1 class="post-title">가능과 의도의 차이</h1>
+    <div class="post-meta">
+      <time>January 30, 2026</time><span> / 4min</span>
+    </div>
+    <div class="post-spacer"></div>
+    <div class="prose">
+      <p>운 좋게 잘 만들어진 시스템 위에서 일을 하게 되어도, 난감한 요구사항은 어김없이 찾아오는 법이다. 얼핏 한가로운 기능 제안 같아도 그 이면엔 원대한 야망이 똬리를 틀고 있곤 한다. &quot;나중엔 여기에 실시간 동시 편집을 추가해서...&quot;, &quot;반대로 output을 수정하면 input이 영향을 받도록...&quot; 본질적으로 나쁜 아이디어는 없다. 아이디어가 제안된 과정과 시기가 적절/부적절할 수만 있다.</p>
+<p>나는 그런 장면을 몇 번 본 적이 있다. 매번 같은 패턴이다. &quot;이렇게 하면 되긴 해요&quot;라는 말로 시작해서 &quot;그러려면 많은 걸 바꿔야 해서요&quot;로 끝나는, 짧게는 한 달에서 길게는 1-2년으로 이어지는, 기술 선택의 탄생과 죽음. 오버 엔지니어링은 반드시 피해야 한다. 아무에게도 도움되지 않는 영역을 위해 비용을 지불하기 때문이다. 예측할 수 없는 미래에 대해서는 비용 산정을 포기하는게 차라리 더 효율적이다. 허나 그 반대편은, 특히 빠르고 유연하게 움직이는 조직에서는, 때로 묵과된다. 지나치게 낙관적인 엔지니어링 또한 치명적인 비효율을 낳는다. 그야말로 &quot;빠르게&quot; 움직일 수 없게 되는 것이다.</p>
+<h2>의도를 묻는 일</h2>
+<p>요즘 일을 하다보면 난 스스로에게 이 문장을 자주 묻는다. &quot;지금 만들고자 하는 것은 정확히 무엇인가?&quot; 이 말은 피상적인 요구사항이나 구체적인 데이터 구조를 묻는 것이 아니다. 진짜로 우리가 머릿속에 상상하고 현실에 구현하고 싶은 &#39;그것&#39;은 어떤 형태인지, 왜 존재해야만 하는지, 그것을 다른 사람에게 설명할 수 있는지를 묻는다. 데이터 베이스의 스키마를 어떻게 짜넣을 것인지, 컴포넌트를 어떻게 쪼개고 패스를 어떻게 연결할 것인지 등은 두 번째 문제이다. 우리가 상정하고 있는 문제는 무엇이며, 그것에 대한 최적의 답은 왜 이것인지 대답하는게 첫 번째 문제이다.</p>
+<p>&#39;최적의 답&#39;이라는 지점이 아마 가장 첨예하게 갈리는 부분일 것이다. 왜냐면 &#39;최적&#39;을 셈하는데 사람마다 넣는 요소의 종류도 비중도 조금씩 다르기 때문이다. 적어도 나는 그 계산에 있어서 이상적인 정답은 없다고 생각한다. 성향의 문제로 다루고 싶다. 중요한 건 그 &#39;성향&#39;마저도 명시적으로 이해될 필요가 있지 않나, 하는 생각이다. 조직이 유연하고 비용에 관대하다면 최적이란 즉시성을 크게 반영할 것 같다. 장기적이고 단단한 기반을 원하는 팀은 섬세하고 정확한 설계를 지향할 가능성이 높다.</p>
+<h2>가능한 일부터</h2>
+<p>저렴한 시도를 반복해 깨달음을 얻는 팀들, 가령 내가 현재 속한 토스는 그런 성향이 매우 극단적으로 발현된 곳인데, 이런 환경은 때로 기술 기반의 형성을 자연발생적인 무언가로 인식하는 측면이 있는 것 같다. 물론 특정 기술을 충분한 논거 없이 고집하는 행태는 배격되어야 하지만, 우리가 실제로 뭘 만들고 싶어하는지 충분히 고민하지 않은 채로 &quot;그저 재료가 준비되어 있으니까&quot; 연결하고 조립하는 작업들 사이에서 눈썹이 꿈틀할 때가 있다. 그게 잘못일까? 글쎄, 가치 판단을 하기엔 이른 시점 같지 않나? 지금의 목표는 실제로 만들고 싶은 것을 &quot;가능한 저렴하고 빠르게&quot; 만드는 것에 있으니까. 다르게 말하면 오버 엔지니어링을 강력히 경계하는 팀이다.</p>
+<p>지금까지 이러한 성향의 팀이 성공해온 역사를 살펴보면, 이 접근은 매우 성공적인 것 같다. 부정하지 않는다. 확정된 것 하나 없는 미래를 함부로 추측하고 거대한 빌드업을 이어간 팀들 중 성공한 팀은 별로 없다. 시장이 작동하는 중심에 이미 적자 생존이 부여되어 있기에, 그 안의 플레이어들을 움직이게 하는 도구로서의 기술 또한 적자 생존의 원리로 움직이는게 타당할 수 있다. 하지만 나는 그 이면의 비용들도 분명하게 봐왔다.</p>
+<h2>잊혀진 비용</h2>
+<p>최근 몇 년 동안 내가 했던 일은 거진 다 &#39;타인이 생산한 기술 부채의 해소&#39;였다. 새로운 무언가를 열심히 만들어낸 경험은 너무 오래되어 잘 기억나지 않는다. 그런 부채들은 어디서 왔을까? 전부 과거의 낙관적인 의사 결정, 혹은 애초에 우리가 어떤 의사결정을 실제로 행하고 있는 것인지 무지한 상태에서 쌓여온 수많은 행동의 흔적들에서 왔다. 너저분한 스코프, 정체를 알 수 없는 인터페이스, 3번 중복 구현된 함수, 소스 코드를 찾을 수 없는 패키지, 레이어가 보이지 않는 시스템, 책임이 융합된 서드파티... 인원이 늘어갈 수록 잘 닦인 환경은 윤활유로서 필수적이기 때문에 나는 그런 것들을 정리하는 일에 뛰어들지 않을 수 없었다. 그건 너무 중요한 일이라, 도저히 눈 감을 자신이 없었기 때문이다. 다시는 하고 싶지 않다는 말이 입 밖으로 나오게 될 거라는 걸 알면서도.</p>
+<p>그 예전에 무언가를 만들고 시도했던 사람들이 모두 틀린 걸까? 그 사람들이 전부 나쁜 사람들이라서 내가 이 부채를 해소해야 했던 걸까? 나는 지금 조직의 잊혀진 비용에 대해 탄식하는가, 아니면 청소를 마친 후 소비된 내 시간을 아까워 하는가? 선택의 가치를 평가하려면 그 선택이 행해진 시간대로 돌아가야만 한다. 그때는 몰랐던 것들, 그때는 옳았던 것들을 이해한 뒤에야 비로소 선택을 존중할 수 있게 된다. 지금 이 순간 내가 내리는 여러가지 선택도, 미래의 어느 날엔 납득하기 어려운 부채로 보일 수 있다. 그게 부채, 비용의 본질이 아닐까?</p>
+<h2>다시 묻기</h2>
+<p>그러나 그런 당연한 말, &quot;그땐 그럴 수 밖에 없었어&quot;에 숨어버리기엔 비용이 치르게 하는 대가가 미묘하게 너무 큰 경우들도 있었다. 모든 것을 처음부터 다시 만들지 않고는 아무것도 이어나갈 수 없는 지경이 되었을 때, 우리가 손에 쥔 코드 조각들이 우리가 실제로 바라던 것들과는 전혀 다른 무언가로 변모해버린 상황을 목격할 때, 한 번 쯤은 생각할 필요가 있다. &quot;내가 진짜로 만들고 싶은 건 무엇인가?&quot; 지금 이 순간에 필요해보이고 또 가능해보이는 것들은 간혹 우리를 속이곤 한다: &quot;이게 네가 진짜 원하는 거야.&quot; 그게 생물이 적응하고 생존하는 방식이다. 개별 개체는 매 순간 죽음과 생존이라는 이지선다 속에서 선택을 누적하며 최적의 경로를 귀납한다. 우리는 신이 아니므로 최종 단계에서 우리가 실제로 원했던 이상이 무엇인지 정확히 정의할 수 없다. 어쩌면 그 상태는 모순 덩어리일 수도, 혹은 실현 불가능한 것일 수도 있다.</p>
+<p>중요한 것은 질문이다. 한 번 더 생각하는 일이다. &quot;이게 내가 진짜 원하는 걸까?&quot;</p>
+<p>&quot;우리가 만들기로 의도한 것은 무엇일까?&quot;</p>
+
+    </div>
+
+    <div id="comment-container">
+      <script
+        src="https://giscus.app/client.js"
+        data-repo="jwoo0122/jinwoojeo.ng"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkyMjg2MDUwNDM="
+        data-category="Announcements"
+        data-category-id="DIC_kwDODaA8c84C2d2j"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async></script>
+    </div>
+
+    <footer class="footer">
+      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
+      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+    </footer>
+  </main>
+  <script type="module" src="/js/components.js"></script>
+  <script type="module">
+    import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js';
+    hljs.highlightAll();
+  </script>
+</body>
+</html>

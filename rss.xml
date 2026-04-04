@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="/rss-styles.xsl" type="text/xsl"?>
+<rss version="2.0">
+<channel>
+<title>Jinwoo Jeong</title>
+<description></description>
+<link>https://jinwoojeo.ng/</link>
+<item>
+  <title>잠시 잊었던 고유함으로</title>
+  <link>https://jinwoojeo.ng/posts/260304/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/260304/</guid>
+  <description>본질적인 문제는 인간이 편협하고 이기적이며 바보같다는 것이다.</description>
+  <pubDate>Wed, 04 Mar 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>가능과 의도의 차이</title>
+  <link>https://jinwoojeo.ng/posts/260130/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/260130/</guid>
+  <description>적자생존과 지적설계의 어딘가에서 엔지니어링하는 법</description>
+  <pubDate>Fri, 30 Jan 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>JS: Module &amp; Package</title>
+  <link>https://jinwoojeo.ng/posts/2404120/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2404120/</guid>
+  <description>(거의) 완벽하게 JavaScript 모듈과 패키지에 대해 알아봅시다. 기초부터 차근차근!</description>
+  <pubDate>Fri, 12 Apr 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>배움의 각성</title>
+  <link>https://jinwoojeo.ng/posts/2312250/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2312250/</guid>
+  <description>넘어지고 넘어서는 연습을 수놓아봅시다. 그게 인생의 전부에요.</description>
+  <pubDate>Mon, 25 Dec 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>선언과 명령</title>
+  <link>https://jinwoojeo.ng/posts/2302090/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2302090/</guid>
+  <description>읽고 쓰기 쉬운 코드를 작성하려면 무엇을 고민해야 할까요?</description>
+  <pubDate>Thu, 09 Feb 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>그래서 React가 뭔데요?</title>
+  <link>https://jinwoojeo.ng/posts/2102030/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2102030/</guid>
+  <description>Hook API, Concurrent mode, Server Component. 수많은 기능들이 React 에 추가되고 있지만, 그래서 결국 React 의 본질은 무엇일까요? 우리는 React 로 뭘 만들고 있는 걸까요? - 다시 배우는 React.</description>
+  <pubDate>Wed, 03 Feb 2021 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>React 17에는 무슨 일이</title>
+  <link>https://jinwoojeo.ng/posts/2012130/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2012130/</guid>
+  <description>10월에 공개한 React 17을 12월에 다루는 것이 매우 안타깝습니다. 늦었지만 중요한 이번 업데이트에 어떤 변화가 있는지 알아봅니다.</description>
+  <pubDate>Sun, 13 Dec 2020 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>CSS Houdini - Paint API</title>
+  <link>https://jinwoojeo.ng/posts/2009050/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2009050/</guid>
+  <description>CSS 디버깅의 첫 번째 원칙: 자리에서 일어나 산책을 하고, 커피를 마시며, 동료와 잡담을 나누라. 아니면, CSS Houdini 를 공부하던가.</description>
+  <pubDate>Sat, 05 Sep 2020 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>ProseMirror 사용기</title>
+  <link>https://jinwoojeo.ng/posts/2004050/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2004050/</guid>
+  <description>이쯤되면 Notion 개발진은 얼마나 많은 고충이 있을지 상상하기도 힘듭니다.</description>
+  <pubDate>Sun, 05 Apr 2020 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>취미를 찾아 나서는 길</title>
+  <link>https://jinwoojeo.ng/posts/2002220/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/2002220/</guid>
+  <description>여러분은 어떤 취미를 갖고 계신가요?</description>
+  <pubDate>Sat, 22 Feb 2020 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>JS: Generator</title>
+  <link>https://jinwoojeo.ng/posts/1910170/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/1910170/</guid>
+  <description>Javascript Generator의 문법과 사용법에 대해 알아봅니다.</description>
+  <pubDate>Thu, 17 Oct 2019 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>JS: Prototype</title>
+  <link>https://jinwoojeo.ng/posts/1902190/</link>
+  <guid isPermaLink="true">https://jinwoojeo.ng/posts/1902190/</guid>
+  <description>뒤돌아서면 헷갈리는 prototype 을 깔끔하게 정리했습니다.</description>
+  <pubDate>Tue, 19 Feb 2019 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
