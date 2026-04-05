@@ -33,6 +33,7 @@
   --bg: #fbfbfb;
   --text: oklch(10% 0 0);
   --text-muted: oklch(60% 0 0);
+  --text-code-background: oklch(90% 0 0);
   --link: oklch(0.5 0.17 282.27);
   --border: oklch(87% 0 0);
   --border-muted: oklch(92.2% 0 0);
@@ -40,9 +41,10 @@
 }
 
 .dark {
-  --bg: #171717;
+  --bg: oklch(18% 0 0);
   --text: oklch(90% 0 0);
   --text-muted: oklch(60% 0 0);
+  --text-code-background: oklch(30% 0 0);
   --link: oklch(0.6 0.2 282.51);
   --border: oklch(43.9% 0 0);
   --border-muted: oklch(37.1% 0 0);
@@ -60,7 +62,7 @@ html {
   color: var(--text);
   font-family: "BareunBatang", serif;
   line-height: 1.85rem;
-  font-size: 13pt;
+  font-size: 13.8pt;
   text-align: justify;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
@@ -218,13 +220,15 @@ video {
 }
 
 code {
-  font-size: .875em;
-  font-weight: 600;
+  font-size: .8rem;
+  background-color: var(--text-code-background);
+  padding: 0.2rem;
+  border-radius: 4px;
 }
 
 code::before,
 code::after {
-  content: "`";
+  content: "";
 }
 
 h3 code { font-size: .9em; }
@@ -246,7 +250,7 @@ pre code {
   line-height: inherit;
   background-color: transparent;
   border-width: 0;
-  border-radius: 0;
+  border-radius: 6px;
   padding: 0;
 }
 
@@ -365,7 +369,7 @@ h4 + * {
 .post-title {
   margin-top: 0;
   font-size: 2.027rem;
-  line-height: 2.75rem;
+  line-height: 2.45rem;
 }
 
 .post-meta {
@@ -389,7 +393,7 @@ h4 + * {
 
 .footnotes {
   margin-top: 2rem;
-  font-size: 0.875em;
+  font-size: 0.9rem;
   color: var(--text-muted);
   word-break: break-all;
 }
@@ -410,6 +414,7 @@ h4 + * {
 
 .footnotes li p {
   margin: 0;
+  font-size: 0.9rem;
   display: inline;
 }
 

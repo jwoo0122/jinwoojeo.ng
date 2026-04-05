@@ -15,6 +15,7 @@ export class SiteLayout extends HTMLElement {
           margin-bottom: 2rem;
         }
         .site-title {
+          margin: 0 0 0.7rem 0;
           font-weight: 700;
         }
         a {
@@ -22,8 +23,7 @@ export class SiteLayout extends HTMLElement {
           text-decoration: none;
         }
         .nav-link {
-          display: block;
-          margin: 0.75rem 0;
+          margin: 0 0 0.85rem 0;
           color: var(--text-muted);
         }
         .footer {
@@ -39,7 +39,7 @@ export class SiteLayout extends HTMLElement {
           background-color: var(--border-muted);
         }
         .content {
-          max-width: 32rem;
+          max-width: 34rem;
         }
 
         @media (min-width: 960px) {
@@ -68,12 +68,12 @@ export class SiteLayout extends HTMLElement {
       </style>
       <div class="header">
         <div>
-          <span class="site-title">정 진우</span>
+          <h4 class="site-title">정 진우</h4>
         </div>
         <div>
-          <a class="nav-link" href="/">인사</a>
-          <a class="nav-link" href="/posts">생각한 것들</a>
-          <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
+          <a href="/"><h4 class="nav-link">인사</h4></a>
+          <a href="/posts"><h4 class="nav-link" href="/posts">생각한 것들</h4></a>
+          <a href="https://github.com/jwoo0122" target="_blank"><h4 class="nav-link">GitHub ↗</h4></a>
         </div>
       </div>
       <div class="divider">

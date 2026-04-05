@@ -151,7 +151,8 @@ function convertPost(filePath) {
     extraHeadParts.push(`  <meta property="og:image" content="/images/${heroImage}">`);
     extraHeadParts.push(`  <meta property="twitter:image" content="${SITE_URL}/images/${heroImage}">`);
   }
-  extraHeadParts.push(`  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">`);
+  extraHeadParts.push(`  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/foundation.min.css" media="(prefers-color-scheme: light)">`);
+  extraHeadParts.push(`  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/tokyo-night-dark.min.css" media="(prefers-color-scheme: dark)">`);
 
   const html = renderPage({
     title,
@@ -160,7 +161,7 @@ function convertPost(filePath) {
     extraHead: extraHeadParts.join('\n') + '\n',
     content: `    <h1 class="post-title">${escapeHtml(title)}</h1>
     <div class="post-meta">
-      <time>${dateFormatted}</time><span> / ${readingTime}분</span>
+      <time>${dateFormatted}</time><span>, ${readingTime}분</span>
     </div>
     <div class="post-spacer"></div>
     <div>
@@ -230,7 +231,7 @@ function generatePostsIndex(posts) {
         <li class="post-item">
           <span>
             <span class="post-item-title">${escapeHtml(p.title)}</span>
-            <span class="post-item-meta">${p.dateFormatted} / ${p.readingTime}분</span>
+            <span class="post-item-meta">${p.dateFormatted}, ${p.readingTime}분</span>
           </span>
           <div class="post-item-desc">${escapeHtml(p.description)}</div>
         </li>
