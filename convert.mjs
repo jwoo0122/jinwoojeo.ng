@@ -37,6 +37,57 @@ function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+// ── Footnotes ─────────────────────────────────────
+
+function processFootnotes(markdown) {
+  const lines = markdown.split('\n');
+  const cleanLines = [];
+  const definitions = new Map();
+  let currentId = null;
+  let currentContent = [];
+
+  for (const line of lines) {
+    const defMatch = line.match(/^\[\^([^\]]+)\]:\s*(.*)/);
+    if (defMatch) {
+      if (currentId) definitions.set(currentId, currentContent.join('\n').trim());
+      currentId = defMatch[1];
+      currentContent = [defMatch[2]];
+    } else if (currentId && (line.startsWith('    ') || line.startsWith('\t') || line.trim() === '')) {
+      currentContent.push(line.replace(/^(    |\t)/, ''));
+    } else {
+      if (currentId) {
+        definitions.set(currentId, currentContent.join('\n').trim());
+        currentId = null;
+        currentContent = [];
+      }
+      cleanLines.push(line);
+    }
+  }
+  if (currentId) definitions.set(currentId, currentContent.join('\n').trim());
+
+  if (definitions.size === 0) return { markdown, footnotesHtml: '' };
+
+  const refOrder = [];
+  let cleaned = cleanLines.join('\n');
+  cleaned = cleaned.replace(/\[\^([^\]]+)\](?!:)/g, (_, id) => {
+    if (!definitions.has(id)) return `[^${id}]`;
+    let idx = refOrder.indexOf(id);
+    if (idx === -1) { refOrder.push(id); idx = refOrder.length - 1; }
+    return `<sup class="footnote-ref"><a href="#fn-${id}" id="fnref-${id}">${idx + 1}</a></sup>`;
+  });
+
+  const items = refOrder.map((id) => {
+    const raw = definitions.get(id);
+    let html = marked.parse(raw).trim();
+    const backref = `\u00a0<a href="#fnref-${id}" class="footnote-backref" title="Back to text">↩</a>`;
+    html = html.replace(/<\/p>\s*$/, `${backref}</p>`) || html + backref;
+    return `<li id="fn-${id}">${html}</li>`;
+  });
+
+  const footnotesHtml = `\n<section class="footnotes">\n<hr>\n<ol>\n${items.join('\n')}\n</ol>\n</section>`;
+  return { markdown: cleaned, footnotesHtml };
+}
+
 // ── Shared HTML shell ──────────────────────────────
 
 function renderPage({ title, description = '', url, content, extraHead = '', extraBody = '' }) {
@@ -62,9 +113,6 @@ function renderPage({ title, description = '', url, content, extraHead = '', ext
   <meta property="twitter:url" content="${fullUrl}">
   <meta property="twitter:title" content="${titleEscaped}">
   <meta property="twitter:description" content="${descEscaped}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
 ${extraHead}  <script type="module" src="/js/components.js"></script>
   <script>
@@ -95,14 +143,15 @@ function convertPost(filePath) {
   const description = frontmatter.description || '';
   const heroImage = frontmatter.heroImage || null;
 
-  const htmlContent = marked.parse(content);
+  const { markdown: processedContent, footnotesHtml } = processFootnotes(content);
+  const htmlContent = marked.parse(processedContent) + footnotesHtml;
 
   const extraHeadParts = [];
   if (heroImage) {
     extraHeadParts.push(`  <meta property="og:image" content="/images/${heroImage}">`);
     extraHeadParts.push(`  <meta property="twitter:image" content="${SITE_URL}/images/${heroImage}">`);
   }
-  extraHeadParts.push(`  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">`);
+  extraHeadParts.push(`  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">`);
 
   const html = renderPage({
     title,
@@ -156,7 +205,8 @@ function convertPage(filePath, outputPath) {
   const raw = readFileSync(filePath, 'utf-8');
   const { data: frontmatter, content } = matter(raw);
 
-  const htmlContent = marked.parse(content);
+  const { markdown: processedContent, footnotesHtml } = processFootnotes(content);
+  const htmlContent = marked.parse(processedContent) + footnotesHtml;
   const title = frontmatter.title || 'Jinwoo Jeong';
   const description = frontmatter.description || '';
   const url = frontmatter.url || '/';

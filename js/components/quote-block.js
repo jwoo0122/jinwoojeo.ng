@@ -10,27 +10,16 @@ export class QuoteBlock extends HTMLElement {
           display: block;
           position: relative;
           margin: 1rem 0;
-          padding: 1rem 1.5rem;
-          font-size: 0.875rem;
-        }
-        :host(.default) {
-          background: var(--quote-bg);
-        }
-        :host(.disclaimer) {
-          background: var(--quote-disclaimer-bg);
+          padding: 0.3rem 1rem;
+          color: var(--quote-body);
         }
         .bar {
           position: absolute;
           left: 0;
           top: 0;
-          width: 0.25rem;
+          width: 0.1rem;
           height: 100%;
-        }
-        :host(.default) .bar {
           background: var(--quote-bar);
-        }
-        :host(.disclaimer) .bar {
-          background: var(--quote-disclaimer-bar);
         }
       </style>
       <div class="bar"></div>

@@ -8,13 +8,9 @@ export class BlogImage extends HTMLElement {
     shadow.innerHTML = `
       <style>
         :host {
-          display: block;
-          margin: 1.5rem auto;
-          text-align: center;
         }
         img {
           max-width: 100%;
-          border-radius: 0.375rem;
         }
       </style>
       <img src="/images/${src}" alt="${alt}" loading="lazy">

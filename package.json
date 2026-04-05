@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "convert": "node convert.mjs --all",
+    "dev": "node dev.mjs",
     "serve": "python3 -m http.server 4321"
   },
   "dependencies": {

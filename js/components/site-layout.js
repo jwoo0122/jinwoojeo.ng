@@ -55,11 +55,11 @@ export class SiteLayout extends HTMLElement {
       </style>
       <div class="header">
         <div>
-          <span class="site-title">Jinwoo Jeong</span>
+          <span class="site-title">정 진우</span>
         </div>
         <div>
-          <a class="nav-link" href="/">About</a>
-          <a class="nav-link" href="/posts">Posts</a>
+          <a class="nav-link" href="/">소개</a>
+          <a class="nav-link" href="/posts">기록</a>
           <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
         </div>
       </div>
