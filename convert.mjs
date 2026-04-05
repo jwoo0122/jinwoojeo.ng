@@ -26,7 +26,7 @@ function getReadingTime(content) {
 
 function formatDate(dateStr) {
   const date = new Date(dateStr);
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -160,7 +160,7 @@ function convertPost(filePath) {
     extraHead: extraHeadParts.join('\n') + '\n',
     content: `    <h1 class="post-title">${escapeHtml(title)}</h1>
     <div class="post-meta">
-      <time>${dateFormatted}</time><span> / ${readingTime}min</span>
+      <time>${dateFormatted}</time><span> / ${readingTime}분</span>
     </div>
     <div class="post-spacer"></div>
     <div class="prose">
@@ -230,7 +230,7 @@ function generatePostsIndex(posts) {
         <li class="post-item">
           <span>
             <span class="post-item-title">${escapeHtml(p.title)}</span>
-            <span class="post-item-meta">${p.dateFormatted} / ${p.readingTime}min</span>
+            <span class="post-item-meta">${p.dateFormatted} / ${p.readingTime}분</span>
           </span>
           <div class="post-item-desc">${escapeHtml(p.description)}</div>
         </li>
