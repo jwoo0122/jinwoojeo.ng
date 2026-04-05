@@ -8,6 +8,7 @@ export class SiteLayout extends HTMLElement {
           display: block;
           width: 100%;
           padding: 1rem;
+          width: fit-content;
         }
         .header {
           font-size: 1.2rem;
@@ -37,6 +38,9 @@ export class SiteLayout extends HTMLElement {
           height: 1px;
           background-color: var(--border-muted);
         }
+        .content {
+          max-width: 32rem;
+        }
 
         @media (min-width: 960px) {
           :host {
@@ -56,9 +60,6 @@ export class SiteLayout extends HTMLElement {
           }
           .divider {
             display: none;
-          }
-          .content {
-            max-width: 32rem;
           }
           .footer {
             grid-column: 2;
