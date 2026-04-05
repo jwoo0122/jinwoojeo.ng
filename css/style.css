@@ -1,6 +1,5 @@
 /*
  * Global styles for jinwoojeo.ng
- * Replaces Tailwind CSS + @tailwindcss/typography
  */
 
 /* ── Font faces ──────────────────────────────────── */
@@ -18,8 +17,8 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-
 }
+
 @font-face {
   font-family: "BareunBatang";
   src: url("/fonts/BareunBatangOTFPro-1.woff2") format("woff2");
@@ -76,16 +75,261 @@ body {
   align-items: center;
 }
 
-h1, h2, h3 {
-  border: 0 solid;
-  margin: 0;
-  padding: 0;
-  font-size: inherit;
-  scroll-margin-top: 30px;
+/* ── Typography ─────────────────────────────────── */
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 a {
+  color: var(--link);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+strong {
+  font-weight: 600;
+}
+
+h1, h2, h3, h4 {
+  border: 0 solid;
+  padding: 0;
+  scroll-margin-top: 30px;
+}
+
+h1 {
+  margin-top: 2rem;
+  margin-bottom: .6rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+h2 {
+  margin-top: 1.5rem;
+  margin-bottom: .6rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+h3 {
+  margin-top: 1.6rem;
+  margin-bottom: .6rem;
+  font-size: 1.25em;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+h4 {
+  margin-top: 1.5em;
+  margin-bottom: .5em;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+h1 strong { font-weight: 900; }
+h2 strong { font-weight: 800; }
+h3 strong { font-weight: 700; }
+h4 strong { font-weight: 700; }
+
+ol {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-inline-start: 1.625em;
+  list-style-type: decimal;
+}
+
+ul {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-inline-start: 1.625em;
+  list-style-type: disc;
+}
+
+ol > li::marker {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+ul > li::marker {
+  color: var(--border);
+}
+
+ol > li,
+ul > li {
+  padding-inline-start: .375em;
+}
+
+ul ul, ul ol, ol ul, ol ol {
+  margin-top: .75em;
+  margin-bottom: .75em;
+}
+
+dl { margin-top: 1.25em; margin-bottom: 1.25em; }
+dt { margin-top: 1.25em; font-weight: 600; }
+dd { margin-top: .5em; padding-inline-start: 1.625em; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-muted);
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+blockquote {
+  border-inline-start-width: .25rem;
+  border-inline-start-color: var(--border-muted);
+  quotes: "\201C" "\201D" "\2018" "\2019";
+  margin-top: 1.6em;
+  margin-bottom: 1.6em;
+  padding-inline-start: 1em;
+  font-style: italic;
+  font-weight: 500;
+}
+
+blockquote p:first-of-type::before {
+  content: open-quote;
+}
+
+blockquote p:last-of-type::after {
+  content: close-quote;
+}
+
+img, picture {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+picture {
+  display: block;
+}
+
+picture > img {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+video {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+code {
+  font-size: .875em;
+  font-weight: 600;
+}
+
+code::before,
+code::after {
+  content: "`";
+}
+
+h3 code { font-size: .9em; }
+
+pre {
+  margin: 1rem 0;
+  font-size: .8rem;
+  font-weight: 400;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+pre code {
+  font-weight: inherit;
   color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+pre code::before,
+pre code::after {
+  content: none;
+}
+
+table {
+  table-layout: auto;
+  text-align: start;
+  width: 100%;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: .875em;
+  line-height: 1.71429;
+}
+
+thead {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--border);
+}
+
+thead th {
+  vertical-align: bottom;
+  padding: 0 .571429em .571429em;
+  font-weight: 600;
+}
+
+thead th:first-child { padding-inline-start: 0; }
+thead th:last-child { padding-inline-end: 0; }
+
+tbody tr {
+  border-bottom-width: 1px;
+  border-bottom-color: var(--border-muted);
+}
+
+tbody tr:last-child {
+  border-bottom-width: 0;
+}
+
+tbody td,
+tfoot td {
+  vertical-align: baseline;
+  padding: .571429em;
+}
+
+tbody td:first-child, tfoot td:first-child { padding-inline-start: 0; }
+tbody td:last-child, tfoot td:last-child { padding-inline-end: 0; }
+
+tfoot {
+  border-top-width: 1px;
+  border-top-color: var(--border);
+}
+
+figure { margin-top: 2em; margin-bottom: 2em; }
+figure > * { margin-top: 0; margin-bottom: 0; }
+
+figcaption {
+  color: var(--text-muted);
+  margin-top: .857143em;
+  font-size: .875em;
+  line-height: 1.42857;
+}
+
+hr + *,
+h2 + *,
+h3 + *,
+h4 + * {
+  margin-top: 0;
+}
+
+/* ── Content width ──────────────────────────────── */
+
+.prose {
+  max-width: 65ch;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
 }
 
 /* ── About page sections ─────────────────────────── */
@@ -107,6 +351,8 @@ a {
 }
 
 .post-list a {
+  color: inherit;
+  font-weight: inherit;
   text-decoration: none;
 }
 
@@ -129,6 +375,7 @@ a {
 /* ── Single post page ────────────────────────────── */
 
 .post-title {
+  margin-top: 0;
   font-size: 2.05rem;
   line-height: 2.75rem;
 }
@@ -141,300 +388,6 @@ a {
   margin: 1.5rem 0;
 }
 
-/* ── Prose (typography for blog content) ──────────── */
-
-.prose {
-  color: var(--text);
-  max-width: 65ch;
-  /* font-size: 1rem; */
-  /* line-height: 1.75; */
-}
-
-.prose :where(p) {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.prose :where(a) {
-  color: var(--link);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.prose :where(strong) {
-  color: var(--text);
-  font-weight: 600;
-}
-
-.prose :where(a strong),
-.prose :where(blockquote strong),
-.prose :where(thead th strong) {
-  color: inherit;
-}
-
-.prose :where(ol) {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
-  padding-inline-start: 1.625em;
-  list-style-type: decimal;
-}
-
-.prose :where(ul) {
-  margin-top: 1.25em;
-  margin-bottom: 1.25em;
-  padding-inline-start: 1.625em;
-  list-style-type: disc;
-}
-
-.prose :where(ol > li)::marker {
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-.prose :where(ul > li)::marker {
-  color: var(--border);
-}
-
-.prose :where(dt) {
-  color: var(--text);
-  margin-top: 1.25em;
-  font-weight: 600;
-}
-
-.prose :where(hr) {
-  border-color: var(--border-muted);
-  border-top-width: 1px;
-  margin-top: 3em;
-  margin-bottom: 3em;
-}
-
-.prose :where(blockquote) {
-  color: var(--text);
-  border-inline-start-width: .25rem;
-  border-inline-start-color: var(--border-muted);
-  quotes: "\201C" "\201D" "\2018" "\2019";
-  margin-top: 1.6em;
-  margin-bottom: 1.6em;
-  padding-inline-start: 1em;
-  font-style: italic;
-  font-weight: 500;
-}
-
-.prose :where(blockquote p:first-of-type)::before {
-  content: open-quote;
-}
-
-.prose :where(blockquote p:last-of-type)::after {
-  content: close-quote;
-}
-
-/* Headings – note: h1 and h2 are overridden to text-base (1rem) */
-.prose :where(h1) {
-  color: var(--text);
-  margin-top: 2rem;
-  margin-bottom: .6rem;
-  font-size: 1.6rem;
-  font-weight: 800;
-  line-height: 1.5;
-}
-
-.prose :where(h2) {
-  color: var(--text);
-  margin-top: 1.5rem;
-  margin-bottom: .6rem;
-  font-size: 1.3rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
-.prose :where(h3) {
-  color: var(--text);
-  margin-top: 1.6rem;
-  margin-bottom: .6rem;
-  font-size: 1.25em;
-  font-weight: 600;
-  line-height: 1.6;
-}
-
-.prose :where(h4) {
-  color: var(--text);
-  margin-top: 1.5em;
-  margin-bottom: .5em;
-  font-weight: 600;
-  line-height: 1.5;
-}
-
-.prose :where(h1 strong) { color: inherit; font-weight: 900; }
-.prose :where(h2 strong) { color: inherit; font-weight: 800; }
-.prose :where(h3 strong) { color: inherit; font-weight: 700; }
-.prose :where(h4 strong) { color: inherit; font-weight: 700; }
-
-.prose :where(img),
-.prose :where(picture) {
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-
-.prose :where(picture) {
-  display: block;
-}
-
-.prose :where(picture > img) {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.prose :where(video) {
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-
-/* Inline code */
-.prose :where(code) {
-  color: var(--text);
-  font-size: .875em;
-  font-weight: 600;
-}
-
-.prose :where(code)::before,
-.prose :where(code)::after {
-  content: "`";
-}
-
-.prose :where(a code),
-.prose :where(h1 code) {
-  color: inherit;
-}
-
-.prose :where(h2 code) { color: inherit; font-size: .875em; }
-.prose :where(h3 code) { color: inherit; font-size: .9em; }
-.prose :where(h4 code),
-.prose :where(blockquote code),
-.prose :where(thead th code) { color: inherit; }
-
-/* Pre/code blocks */
-.prose :where(pre) {
-  margin: 1rem 0;
-  font-size: .8rem;
-  font-weight: 400;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.prose :where(pre code) {
-  font-weight: inherit;
-  color: inherit;
-  font-size: inherit;
-  font-family: inherit;
-  line-height: inherit;
-  background-color: transparent;
-  border-width: 0;
-  border-radius: 0;
-  padding: 0;
-}
-
-.prose :where(pre code)::before,
-.prose :where(pre code)::after {
-  content: none;
-}
-
-/* Tables */
-.prose :where(table) {
-  table-layout: auto;
-  text-align: start;
-  width: 100%;
-  margin-top: 2em;
-  margin-bottom: 2em;
-  font-size: .875em;
-  line-height: 1.71429;
-}
-
-.prose :where(thead) {
-  border-bottom-width: 1px;
-  border-bottom-color: var(--border);
-}
-
-.prose :where(thead th) {
-  color: var(--text);
-  vertical-align: bottom;
-  padding: 0 .571429em .571429em;
-  font-weight: 600;
-}
-
-.prose :where(thead th:first-child) { padding-inline-start: 0; }
-.prose :where(thead th:last-child) { padding-inline-end: 0; }
-
-.prose :where(tbody tr) {
-  border-bottom-width: 1px;
-  border-bottom-color: var(--border-muted);
-}
-
-.prose :where(tbody tr:last-child) {
-  border-bottom-width: 0;
-}
-
-.prose :where(tbody td),
-.prose :where(tfoot td) {
-  vertical-align: baseline;
-  padding: .571429em;
-}
-
-.prose :where(tbody td:first-child, tfoot td:first-child) { padding-inline-start: 0; }
-.prose :where(tbody td:last-child, tfoot td:last-child) { padding-inline-end: 0; }
-
-.prose :where(tfoot) {
-  border-top-width: 1px;
-  border-top-color: var(--border);
-}
-
-/* Figures */
-.prose :where(figure) { margin-top: 2em; margin-bottom: 2em; }
-.prose :where(figure > *) { margin-top: 0; margin-bottom: 0; }
-
-.prose :where(figcaption) {
-  color: var(--text-muted);
-  margin-top: .857143em;
-  font-size: .875em;
-  line-height: 1.42857;
-}
-
-/* Lists */
-.prose :where(li) {
-  /* margin-top: .5em; */
-  /* margin-bottom: .5em; */
-}
-
-.prose :where(ol > li),
-.prose :where(ul > li) {
-  padding-inline-start: .375em;
-}
-
-.prose :where(ul ul, ul ol, ol ul, ol ol) {
-  margin-top: .75em;
-  margin-bottom: .75em;
-}
-
-.prose :where(dl) { margin-top: 1.25em; margin-bottom: 1.25em; }
-.prose :where(dd) { margin-top: .5em; padding-inline-start: 1.625em; }
-
-/* Spacing resets after headings/hr */
-.prose :where(hr + *),
-.prose :where(h2 + *),
-.prose :where(h3 + *),
-.prose :where(h4 + *) {
-  margin-top: 0;
-}
-
-/* First/last child spacing */
-.prose > :first-child {
-  margin-top: 0;
-}
-
-.prose > :last-child {
-  margin-bottom: 0;
-}
-
 /* ── Post image ──────────────────────────────────── */
 
 .post-image {
@@ -445,11 +398,6 @@ a {
 }
 
 /* ── Footnotes ──────────────────────────────────── */
-
-.footnote-ref a {
-  text-decoration: none;
-  color: var(--link);
-}
 
 .footnotes {
   margin-top: 2rem;
@@ -477,6 +425,7 @@ a {
 }
 
 .footnote-backref {
+  color: inherit;
   text-decoration: none;
 }
 
