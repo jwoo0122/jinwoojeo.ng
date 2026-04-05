@@ -395,6 +395,7 @@ h4 + * {
   margin-top: 2rem;
   font-size: 0.875em;
   color: var(--text-muted);
+  word-break: break-all;
 }
 
 .footnotes hr {
