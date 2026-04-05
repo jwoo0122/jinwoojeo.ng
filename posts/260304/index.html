@@ -18,8 +18,12 @@
   <meta property="twitter:title" content="잠시 잊었던 고유함으로">
   <meta property="twitter:description" content="본질적인 문제는 인간이 편협하고 이기적이며 바보같다는 것이다.">
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script type="module" src="/js/components.js"></script>
   <script>
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const set = (dark) => document.documentElement.classList.toggle('dark', dark);
@@ -28,14 +32,7 @@
   </script>
 </head>
 <body>
-  <main class="container">
-    <div class="header">
-      <span class="site-title">Jinwoo Jeong</span>
-      <a class="nav-link" href="/">About</a>
-      <a class="nav-link" href="/posts">Posts</a>
-      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
-    </div>
-
+  <site-layout>
     <h1 class="post-title">잠시 잊었던 고유함으로</h1>
     <div class="post-meta">
       <time>March 4, 2026</time><span> / 5min</span>
@@ -56,7 +53,7 @@
 <p>나는 회사에서 동료와 티타임을 하다 그런 말을 한 적이 있다. 솔직히, 컴파일러가 필요한 것이냐고. 여전히 바이너리에 대한 학습량은 부족하기 때문에 LLM이 한땀한땀 바이트를 찍어내는 것은 아직 기대에 미치지 못하겠지만, 고급 언어를 만들어내야 했던 이유가 “기계어로 사이버펑크 2077을 만들기엔 우리가 너무 멍청하기 때문”이었다면 컴파일러는 그저 “첫 번째 시스템”이 된다. 하부 구조를 은닉하고 상부 구조의 자유를 제공했던. 허풍이 많아서 별로 좋아하는 사람은 아니지만 일론 머스크가 “프로그래밍의 시대가 끝날 것이고, 인공지능이 즉시 프로그램을 생성할 것이다”라고 공언한 것을 나중에 알고 상당히 즐거웠다. 그 말에 전적으로 동의한다. 언제가 될 지는 모르겠지만.</p>
 <p>당연스럽게 나오는 질문도 있다. 테스트 코드의 역설이기도 하다. Vibe Coding으로 만들어진 물건도 어떻게든 검증은 되어야 한다. 기준을 충족하는지. 검증을 위한 수단을 어떻게 검증할 것인가. 바이너리를 찍어내든 소스코드를 양산하든 만들어진 무언가는 불완전한 우리 세상에서 우리와 상호작용해야 하고, 그것을 받아들일지는 전적으로 우리에게 권리가 주어져 있으므로 대답을 내놓아야 한다. 그런 &quot;납득&quot;이나 &quot;수용&quot;은 뗀석기를 만들던 시절부터 FSD로 왈가왈부하는 지금까지 우리가 늘 갖고 있던 것일 뿐이다. 단지 달라진 것은 이제껏 본 적 없는 속도의 생산성이고, 내 손을 놓쳐 흐르는 미검증의 영역이 너무 커보이기 때문에 불안해하는 것 같다. 관점을 달리 해보면 이는 Hit와 Miss 양 쪽의 증폭일 뿐, 비율이 달라지는 문제는 아닐 것이다. 유능한 엔지니어들이 모인 팀에서도 버그는 늘 발생했다.</p>
 <hr>
-<p>지적 능력은 더 이상 인간에게 필요하지 않은 일이 될 것이다. 소크라테스가 산파술로 인간의 진리에 다가서는 일이 다리를 짓고 도로를 까는 일과는 격이 다른 것으로 취급되었던 때처럼, 인간은 다시 진리의 문 앞에 설 것이다. 나는 염세적인 인간이라 그 진리라는 것이 최고선 따위의 따뜻한 무언가라 생각하지는 않는다. 거기엔 차라리 사치나 탐욕과 같은, 전지전능을 손에 넣었음에도 여전히 배가 고픈 영혼의 한계가 있을 것 같다. 바빌론의 탑을 세운 것은 공학의 정수가 아닌 신에 대한 모멸과 질투였다. 신이 언어를 갈라 그 시도를 짓뭉개었지만 웬걸, 이제 우리는 협력 따위 하지 않아도 저마다의 탑을 세울 수 있게 된 듯 하다.</p>
+<p>지적 능력은 더 이상 인간에게 필요하지 않은 일이 될 것이다. 소크라테스가 산파술로 인간의 진리에 다가서던 일이 다리를 짓고 도로를 까는 일과는 격이 다른 것으로 취급되었던 때처럼, 인간은 다시 진리의 문 앞에 설 것이다. 나는 염세적인 인간이라 그 진리라는 것이 최고선 따위의 따뜻한 무언가라 생각하지는 않는다. 거기엔 차라리 사치나 탐욕과 같은, 전지전능을 손에 넣었음에도 여전히 배가 고픈 영혼의 한계가 있을 것 같다. 바빌론의 탑을 세운 것은 공학의 정수가 아닌 신에 대한 모멸과 질투였다. 신이 언어를 갈라 그 시도를 짓뭉개었지만 웬걸, 이제 우리는 협력 따위 하지 않아도 저마다의 탑을 세울 수 있게 된 듯 하다.</p>
 <p>어떤 신에게 도전할 지 즐겁게 상상할 시기가 돌아왔다. 니체가 죽인 신, 카뮈가 신음한 신, 비트겐슈타인이 희석한 그 신을. 창업의 시대가 창궐하리라는 예언은 다소 부족하다. 과장과 사치와 진리 탐구라는 소박하고도 웅장한 인간의 오랜 소망이, 목적을 가릴 만큼 비대해진 수단 -시스템- 너머에서 복귀한다는 것이 좀 더 정확한 지적이라고 나는 생각한다. 이미 이 글이 그러고 있듯이. 어릴 적 꿈꿨던 것처럼 만화나 영화 시나리오를 끄적여볼 심산이 든다.</p>
 
     </div>
@@ -79,13 +76,7 @@
         crossorigin="anonymous"
         async></script>
     </div>
-
-    <footer class="footer">
-      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
-      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-    </footer>
-  </main>
-  <script type="module" src="/js/components.js"></script>
+  </site-layout>
   <script type="module">
     import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js';
     hljs.highlightAll();

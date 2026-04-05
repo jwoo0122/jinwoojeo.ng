@@ -10,7 +10,7 @@
   --text: #171717;
   --text-muted: #737373;
   --text-subtle: #a3a3a3;
-  --menu-color: #525252;
+  --menu-color: #959595;
   --footer-color: #a3a3a3;
 
   /* Quote component */
@@ -26,7 +26,7 @@
   --prose-bold: oklch(20.5% 0 0);
   --prose-counters: oklch(55.6% 0 0);
   --prose-bullets: oklch(87% 0 0);
-  --prose-hr: oklch(92.2% 0 0);
+  --prose-hr: rgba(0, 0, 0, 0.1);
   --prose-quotes: oklch(20.5% 0 0);
   --prose-quote-borders: oklch(92.2% 0 0);
   --prose-captions: oklch(55.6% 0 0);
@@ -58,7 +58,7 @@
   --prose-bold: #fff;
   --prose-counters: oklch(70.8% 0 0);
   --prose-bullets: oklch(43.9% 0 0);
-  --prose-hr: oklch(37.1% 0 0);
+  --prose-hr: rgba(0, 0, 0, 0.1);
   --prose-quotes: oklch(97% 0 0);
   --prose-quote-borders: oklch(37.1% 0 0);
   --prose-captions: oklch(70.8% 0 0);
@@ -78,13 +78,18 @@
 html {
   background-color: var(--bg);
   color: var(--text);
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Gowun Batang", serif;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
+  font-size: 16px;
 }
 
 body {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1, h2, h3 {
@@ -99,37 +104,6 @@ a {
   color: inherit;
 }
 
-/* ── Layout ──────────────────────────────────────── */
-
-.container {
-  max-width: 36rem;
-  margin: 1.5rem;
-}
-
-/* ── Header / Navigation ─────────────────────────── */
-
-.header {
-  margin-bottom: 2rem;
-}
-
-.site-title {
-  font-weight: 700;
-}
-
-.nav-link {
-  display: block;
-  margin: 0.75rem 0;
-  color: var(--menu-color);
-  text-decoration: none;
-}
-
-/* ── Footer ──────────────────────────────────────── */
-
-.footer {
-  margin-top: 1.5rem;
-  font-size: 0.875rem;
-  color: var(--footer-color);
-}
 
 /* ── About page sections ─────────────────────────── */
 

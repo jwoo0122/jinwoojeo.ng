@@ -18,8 +18,12 @@
   <meta property="twitter:title" content="그래서 React가 뭔데요?">
   <meta property="twitter:description" content="Hook API, Concurrent mode, Server Component. 수많은 기능들이 React 에 추가되고 있지만, 그래서 결국 React 의 본질은 무엇일까요? 우리는 React 로 뭘 만들고 있는 걸까요? - 다시 배우는 React.">
   <meta property="twitter:image" content="https://jinwoojeo.ng/images/2102030.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script type="module" src="/js/components.js"></script>
   <script>
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const set = (dark) => document.documentElement.classList.toggle('dark', dark);
@@ -28,14 +32,7 @@
   </script>
 </head>
 <body>
-  <main class="container">
-    <div class="header">
-      <span class="site-title">Jinwoo Jeong</span>
-      <a class="nav-link" href="/">About</a>
-      <a class="nav-link" href="/posts">Posts</a>
-      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
-    </div>
-
+  <site-layout>
     <h1 class="post-title">그래서 React가 뭔데요?</h1>
     <div class="post-meta">
       <time>February 3, 2021</time><span> / 10min</span>
@@ -218,13 +215,7 @@ ReactDOM.render(
         crossorigin="anonymous"
         async></script>
     </div>
-
-    <footer class="footer">
-      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
-      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-    </footer>
-  </main>
-  <script type="module" src="/js/components.js"></script>
+  </site-layout>
   <script type="module">
     import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js';
     hljs.highlightAll();

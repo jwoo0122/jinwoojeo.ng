@@ -16,7 +16,11 @@
   <meta property="twitter:url" content="https://jinwoojeo.ng/">
   <meta property="twitter:title" content="Jinwoo Jeong">
   <meta property="twitter:description" content="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
+  <script type="module" src="/js/components.js"></script>
   <script>
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const set = (dark) => document.documentElement.classList.toggle('dark', dark);
@@ -25,14 +29,7 @@
   </script>
 </head>
 <body>
-  <main class="container">
-    <div class="header">
-      <span class="site-title">Jinwoo Jeong</span>
-      <a class="nav-link" href="/">About</a>
-      <a class="nav-link" href="/posts">Posts</a>
-      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
-    </div>
-
+  <site-layout>
     <span>Frontend Developer.</span>
 
     <section class="section">
@@ -66,11 +63,6 @@
         <li>KAIST - School of Computing, BS</li>
       </ul>
     </section>
-
-    <footer class="footer">
-      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
-      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-    </footer>
-  </main>
+  </site-layout>
 </body>
 </html>

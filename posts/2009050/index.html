@@ -18,8 +18,12 @@
   <meta property="twitter:title" content="CSS Houdini - Paint API">
   <meta property="twitter:description" content="CSS 디버깅의 첫 번째 원칙: 자리에서 일어나 산책을 하고, 커피를 마시며, 동료와 잡담을 나누라. 아니면, CSS Houdini 를 공부하던가.">
   <meta property="twitter:image" content="https://jinwoojeo.ng/images/2009050.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script type="module" src="/js/components.js"></script>
   <script>
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const set = (dark) => document.documentElement.classList.toggle('dark', dark);
@@ -28,14 +32,7 @@
   </script>
 </head>
 <body>
-  <main class="container">
-    <div class="header">
-      <span class="site-title">Jinwoo Jeong</span>
-      <a class="nav-link" href="/">About</a>
-      <a class="nav-link" href="/posts">Posts</a>
-      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
-    </div>
-
+  <site-layout>
     <h1 class="post-title">CSS Houdini - Paint API</h1>
     <div class="post-meta">
       <time>September 5, 2020</time><span> / 10min</span>
@@ -314,13 +311,7 @@ registerPaint(&#39;smooth-corners&#39;, SmoothCorners)
         crossorigin="anonymous"
         async></script>
     </div>
-
-    <footer class="footer">
-      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
-      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-    </footer>
-  </main>
-  <script type="module" src="/js/components.js"></script>
+  </site-layout>
   <script type="module">
     import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js';
     hljs.highlightAll();

@@ -18,8 +18,12 @@
   <meta property="twitter:title" content="JS: Prototype">
   <meta property="twitter:description" content="뒤돌아서면 헷갈리는 prototype 을 깔끔하게 정리했습니다.">
   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">
+  <script type="module" src="/js/components.js"></script>
   <script>
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const set = (dark) => document.documentElement.classList.toggle('dark', dark);
@@ -28,14 +32,7 @@
   </script>
 </head>
 <body>
-  <main class="container">
-    <div class="header">
-      <span class="site-title">Jinwoo Jeong</span>
-      <a class="nav-link" href="/">About</a>
-      <a class="nav-link" href="/posts">Posts</a>
-      <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
-    </div>
-
+  <site-layout>
     <h1 class="post-title">JS: Prototype</h1>
     <div class="post-meta">
       <time>February 19, 2019</time><span> / 4min</span>
@@ -120,13 +117,7 @@ var bar = new Object(); //위와 동일
         crossorigin="anonymous"
         async></script>
     </div>
-
-    <footer class="footer">
-      &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
-      <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-    </footer>
-  </main>
-  <script type="module" src="/js/components.js"></script>
+  </site-layout>
   <script type="module">
     import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/es/highlight.min.js';
     hljs.highlightAll();
