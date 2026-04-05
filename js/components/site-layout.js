@@ -7,7 +7,6 @@ export class SiteLayout extends HTMLElement {
         :host {
           display: block;
           width: 100%;
-          max-width: 40rem;
           padding: 1rem;
         }
         .header {
@@ -40,17 +39,29 @@ export class SiteLayout extends HTMLElement {
         }
 
         @media (min-width: 960px) {
+          :host {
+            display: grid;
+            grid-template-columns: auto auto;
+            column-gap: 2rem;
+            width: fit-content;
+            margin-top: 3rem;
+          }
           .header {
-            position: fixed;
+            position: sticky;
             top: 1rem;
-            right: calc(50% + 20rem + 2rem);
-            flex-direction: column;
-            margin-bottom: 0;
+            align-self: start;
             text-align: right;
             white-space: nowrap;
+            margin-bottom: 0;
           }
           .divider {
             display: none;
+          }
+          .content {
+            max-width: 40rem;
+          }
+          .footer {
+            grid-column: 2;
           }
         }
       </style>
@@ -66,7 +77,9 @@ export class SiteLayout extends HTMLElement {
       </div>
       <div class="divider">
       </div>
-      <slot></slot>
+      <div class="content">
+        <slot></slot>
+      </div>
       <footer class="footer">
         &copy; <span id="year"></span> Jinwoo Jeong. All rights reserved.
       </footer>

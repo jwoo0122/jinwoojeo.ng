@@ -163,7 +163,7 @@ function convertPost(filePath) {
       <time>${dateFormatted}</time><span> / ${readingTime}분</span>
     </div>
     <div class="post-spacer"></div>
-    <div class="prose">
+    <div>
       ${htmlContent}
     </div>
 
@@ -215,7 +215,7 @@ function convertPage(filePath, outputPath) {
     title,
     description,
     url,
-    content: `    <div class="prose">\n      ${htmlContent}\n    </div>`,
+    content: `    <div>\n      ${htmlContent}\n    </div>`,
   });
 
   writeFileSync(outputPath, html);
