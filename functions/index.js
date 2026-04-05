@@ -14,11 +14,9 @@ const ASCII_ART = `
   │                                       │
   │   Interests                           │
   │     Web technology                    │
-  │     AT protocol                       │
-  │     Productivity tools                │
+  │     Typography & UX                   │
   │                                       │
-  │   https://jinwoojeo.ng               │
-  │   https://github.com/jwoo0122        │
+  │   https://github.com/jwoo0122         │
   │                                       │
   └───────────────────────────────────────┘
 `;

@@ -58,7 +58,7 @@ export class SiteLayout extends HTMLElement {
             display: none;
           }
           .content {
-            max-width: 40rem;
+            max-width: 32rem;
           }
           .footer {
             grid-column: 2;
@@ -70,8 +70,8 @@ export class SiteLayout extends HTMLElement {
           <span class="site-title">정 진우</span>
         </div>
         <div>
-          <a class="nav-link" href="/">소개</a>
-          <a class="nav-link" href="/posts">기록</a>
+          <a class="nav-link" href="/">인사</a>
+          <a class="nav-link" href="/posts">생각한 것들</a>
           <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
         </div>
       </div>

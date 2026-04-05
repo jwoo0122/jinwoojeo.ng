@@ -59,7 +59,7 @@ html {
   background-color: var(--bg);
   color: var(--text);
   font-family: "BareunBatang", serif;
-  line-height: 1.7;
+  line-height: 1.725rem;
   font-size: 13pt;
   text-align: justify;
   -webkit-text-size-adjust: 100%;
@@ -79,7 +79,11 @@ body {
 p {
   font-size: 1rem;
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+}
+
+p + p {
+  text-indent: 1.6rem;
 }
 
 a {
