@@ -79,11 +79,7 @@ body {
 p {
   font-size: 1rem;
   margin-top: 0;
-  margin-bottom: 0;
-}
-
-p + p {
-  text-indent: 1.6rem;
+  margin-bottom: 1rem;
 }
 
 a {

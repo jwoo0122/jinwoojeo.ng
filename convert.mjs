@@ -79,7 +79,7 @@ function processFootnotes(markdown) {
   const items = refOrder.map((id) => {
     const raw = definitions.get(id);
     let html = marked.parse(raw).trim();
-    const backref = `\u00a0<a href="#fnref-${id}" class="footnote-backref" title="Back to text">↩</a>`;
+    const backref = `\u00a0<a href="#fnref-${id}" class="footnote-backref" title="Back to text">↑</a>`;
     html = html.replace(/<\/p>\s*$/, `${backref}</p>`) || html + backref;
     return `<li id="fn-${id}">${html}</li>`;
   });
