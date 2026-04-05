@@ -11,6 +11,7 @@ export class SiteLayout extends HTMLElement {
           padding: 1rem;
         }
         .header {
+          font-size: 1.2rem;
           margin-bottom: 2rem;
         }
         .site-title {
