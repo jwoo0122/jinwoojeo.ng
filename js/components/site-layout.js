@@ -33,16 +33,35 @@ export class SiteLayout extends HTMLElement {
         .divider {
           width: 100%;
           margin: auto;
-          margin-bottom: 48px;
+          margin-bottom: 2rem;
           height: 1px;
           background-color: rgba(0, 0, 0, 0.1);
         }
+
+        @media (min-width: 960px) {
+          .header {
+            position: fixed;
+            top: 1rem;
+            right: calc(50% + 20rem + 2rem);
+            flex-direction: column;
+            margin-bottom: 0;
+            text-align: right;
+            white-space: nowrap;
+          }
+          .divider {
+            display: none;
+          }
+        }
       </style>
       <div class="header">
-        <span class="site-title">Jinwoo Jeong</span>
-        <a class="nav-link" href="/">About</a>
-        <a class="nav-link" href="/posts">Posts</a>
-        <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
+        <div>
+          <span class="site-title">Jinwoo Jeong</span>
+        </div>
+        <div>
+          <a class="nav-link" href="/">About</a>
+          <a class="nav-link" href="/posts">Posts</a>
+          <a class="nav-link" href="https://github.com/jwoo0122" target="_blank">GitHub</a>
+        </div>
       </div>
       <div class="divider">
       </div>
