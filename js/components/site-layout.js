@@ -23,19 +23,19 @@ export class SiteLayout extends HTMLElement {
         .nav-link {
           display: block;
           margin: 0.75rem 0;
-          color: var(--menu-color);
+          color: var(--text-muted);
         }
         .footer {
           margin-top: 4rem;
           font-size: 0.875rem;
-          color: var(--footer-color);
+          color: var(--text-muted);
         }
         .divider {
           width: 100%;
           margin: auto;
           margin-bottom: 2rem;
           height: 1px;
-          background-color: rgba(0, 0, 0, 0.1);
+          background-color: var(--border-muted);
         }
 
         @media (min-width: 960px) {

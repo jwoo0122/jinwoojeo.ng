@@ -151,7 +151,7 @@ function convertPost(filePath) {
     extraHeadParts.push(`  <meta property="og:image" content="/images/${heroImage}">`);
     extraHeadParts.push(`  <meta property="twitter:image" content="${SITE_URL}/images/${heroImage}">`);
   }
-  extraHeadParts.push(`  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">`);
+  extraHeadParts.push(`  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css">`);
 
   const html = renderPage({
     title,

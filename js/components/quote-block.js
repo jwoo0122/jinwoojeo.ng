@@ -11,7 +11,7 @@ export class QuoteBlock extends HTMLElement {
           position: relative;
           margin: 1rem 0;
           padding: 0.3rem 1rem;
-          color: var(--quote-body);
+          color: var(--text-muted);
         }
         .bar {
           position: absolute;

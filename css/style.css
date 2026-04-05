@@ -4,11 +4,34 @@
  */
 
 /* ── Font faces ──────────────────────────────────── */
+@font-face {
+  font-family: "BareunBatang";
+  src: url("/fonts/BareunBatangOTFPro-3.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "BareunBatang";
+  src: url("/fonts/BareunBatangOTFPro-2.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+
+}
+@font-face {
+  font-family: "BareunBatang";
+  src: url("/fonts/BareunBatangOTFPro-1.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: "BookkMyungjo";
   src: url("/fonts/BookkMyungjo_Light.woff2") format("woff2");
-  font-weight: 300;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -27,66 +50,20 @@
   --bg: #fbfbfb;
   --text: oklch(10% 0 0);
   --text-muted: oklch(60% 0 0);
-  --text-subtle: oklch(60% 0 0);
-  --menu-color: oklch(60% 0 0);
-  --footer-color: oklch(60% 0 0);
-
-  /* Quote component */
-  --quote-bg: #e5e5e5;
+  --link: oklch(0.5 0.17 282.27);
+  --border: oklch(87% 0 0);
+  --border-muted: oklch(92.2% 0 0);
   --quote-bar: #a3a3a3;
-  --quote-disclaimer-bg: #fed7aa;
-  --quote-disclaimer-bar: #f97316;
-  --quote-body: oklch(60% 0 0);
-
-  /* Prose (typography) – neutral palette */
-  --prose-body: oklch(10% 0 0);
-  --prose-headings: oklch(20.5% 0 0);
-  --prose-links: oklch(0.5 0.17 282.27);
-  --prose-bold: oklch(20.5% 0 0);
-  --prose-counters: oklch(55.6% 0 0);
-  --prose-bullets: oklch(87% 0 0);
-  --prose-hr: rgba(0, 0, 0, 0.1);
-  --prose-quotes: oklch(20.5% 0 0);
-  --prose-quote-borders: oklch(92.2% 0 0);
-  --prose-captions: oklch(55.6% 0 0);
-  --prose-code: oklch(20.5% 0 0);
-  --prose-pre-code: oklch(92.2% 0 0);
-  --prose-pre-bg: oklch(26.9% 0 0);
-  --prose-th-borders: oklch(87% 0 0);
-  --prose-td-borders: oklch(92.2% 0 0);
 }
 
 .dark {
   --bg: #171717;
   --text: oklch(90% 0 0);
   --text-muted: oklch(60% 0 0);
-  --text-subtle: oklch(60% 0 0);
-  --menu-color: oklch(60% 0 0);
-  --footer-color: oklch(60% 0 0);
-
-  /* Quote component (dark) */
-  --quote-bg: #404040;
+  --link: oklch(0.6 0.2 282.51);
+  --border: oklch(43.9% 0 0);
+  --border-muted: oklch(37.1% 0 0);
   --quote-bar: #d4d4d4;
-  --quote-disclaimer-bg: #7c2d12;
-  --quote-disclaimer-bar: #f97316;
-  --quote-body: oklch(60% 0 0);
-
-  /* Prose inverted */
-  --prose-body: oklch(87% 0 0);
-  --prose-headings: #fff;
-  --prose-links: oklch(0.6 0.2 282.51);
-  --prose-bold: #fff;
-  --prose-counters: oklch(70.8% 0 0);
-  --prose-bullets: oklch(43.9% 0 0);
-  --prose-hr: rgba(0, 0, 0, 0.1);
-  --prose-quotes: oklch(97% 0 0);
-  --prose-quote-borders: oklch(37.1% 0 0);
-  --prose-captions: oklch(70.8% 0 0);
-  --prose-code: #fff;
-  --prose-pre-code: oklch(87% 0 0);
-  --prose-pre-bg: #00000080;
-  --prose-th-borders: oklch(43.9% 0 0);
-  --prose-td-borders: oklch(37.1% 0 0);
 }
 
 /* ── Base ────────────────────────────────────────── */
@@ -98,11 +75,13 @@
 html {
   background-color: var(--bg);
   color: var(--text);
-  font-family: "BookkMyungjo", serif;
+  font-family: "BareunBatang", serif;
   line-height: 1.8;
   -webkit-text-size-adjust: 100%;
-  font-size: 14pt;
+  font-size: 13.5pt;
   word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01rem;
 }
 
 body {
@@ -124,7 +103,6 @@ h1, h2, h3 {
 a {
   color: inherit;
 }
-
 
 /* ── About page sections ─────────────────────────── */
 
@@ -161,7 +139,7 @@ a {
 }
 
 .post-item-desc {
-  color: var(--text-subtle);
+  color: var(--text-muted);
 }
 
 /* ── Single post page ────────────────────────────── */
@@ -181,7 +159,7 @@ a {
 /* ── Prose (typography for blog content) ──────────── */
 
 .prose {
-  color: var(--prose-body);
+  color: var(--text);
   max-width: 65ch;
   /* font-size: 1rem; */
   /* line-height: 1.75; */
@@ -193,13 +171,13 @@ a {
 }
 
 .prose :where(a) {
-  color: var(--prose-links);
+  color: var(--link);
   font-weight: 500;
   text-decoration: none;
 }
 
 .prose :where(strong) {
-  color: var(--prose-bold);
+  color: var(--text);
   font-weight: 600;
 }
 
@@ -224,31 +202,31 @@ a {
 }
 
 .prose :where(ol > li)::marker {
-  color: var(--prose-counters);
+  color: var(--text-muted);
   font-weight: 400;
 }
 
 .prose :where(ul > li)::marker {
-  color: var(--prose-bullets);
+  color: var(--border);
 }
 
 .prose :where(dt) {
-  color: var(--prose-headings);
+  color: var(--text);
   margin-top: 1.25em;
   font-weight: 600;
 }
 
 .prose :where(hr) {
-  border-color: var(--prose-hr);
+  border-color: var(--border-muted);
   border-top-width: 1px;
   margin-top: 3em;
   margin-bottom: 3em;
 }
 
 .prose :where(blockquote) {
-  color: var(--prose-quotes);
+  color: var(--text);
   border-inline-start-width: .25rem;
-  border-inline-start-color: var(--prose-quote-borders);
+  border-inline-start-color: var(--border-muted);
   quotes: "\201C" "\201D" "\2018" "\2019";
   margin-top: 1.6em;
   margin-bottom: 1.6em;
@@ -267,7 +245,7 @@ a {
 
 /* Headings – note: h1 and h2 are overridden to text-base (1rem) */
 .prose :where(h1) {
-  color: var(--prose-headings);
+  color: var(--text);
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 1rem;
@@ -276,7 +254,7 @@ a {
 }
 
 .prose :where(h2) {
-  color: var(--prose-headings);
+  color: var(--text);
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 1rem;
@@ -285,7 +263,7 @@ a {
 }
 
 .prose :where(h3) {
-  color: var(--prose-headings);
+  color: var(--text);
   margin-top: 1.6rem;
   margin-bottom: .6rem;
   font-size: 1.25em;
@@ -294,7 +272,7 @@ a {
 }
 
 .prose :where(h4) {
-  color: var(--prose-headings);
+  color: var(--text);
   margin-top: 1.5em;
   margin-bottom: .5em;
   font-weight: 600;
@@ -328,7 +306,7 @@ a {
 
 /* Inline code */
 .prose :where(code) {
-  color: var(--prose-code);
+  color: var(--text);
   font-size: .875em;
   font-weight: 600;
 }
@@ -389,11 +367,11 @@ a {
 
 .prose :where(thead) {
   border-bottom-width: 1px;
-  border-bottom-color: var(--prose-th-borders);
+  border-bottom-color: var(--border);
 }
 
 .prose :where(thead th) {
-  color: var(--prose-headings);
+  color: var(--text);
   vertical-align: bottom;
   padding: 0 .571429em .571429em;
   font-weight: 600;
@@ -404,7 +382,7 @@ a {
 
 .prose :where(tbody tr) {
   border-bottom-width: 1px;
-  border-bottom-color: var(--prose-td-borders);
+  border-bottom-color: var(--border-muted);
 }
 
 .prose :where(tbody tr:last-child) {
@@ -422,7 +400,7 @@ a {
 
 .prose :where(tfoot) {
   border-top-width: 1px;
-  border-top-color: var(--prose-th-borders);
+  border-top-color: var(--border);
 }
 
 /* Figures */
@@ -430,7 +408,7 @@ a {
 .prose :where(figure > *) { margin-top: 0; margin-bottom: 0; }
 
 .prose :where(figcaption) {
-  color: var(--prose-captions);
+  color: var(--text-muted);
   margin-top: .857143em;
   font-size: .875em;
   line-height: 1.42857;
@@ -438,8 +416,8 @@ a {
 
 /* Lists */
 .prose :where(li) {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  /* margin-top: .5em; */
+  /* margin-bottom: .5em; */
 }
 
 .prose :where(ol > li),
@@ -485,7 +463,7 @@ a {
 
 .footnote-ref a {
   text-decoration: none;
-  color: var(--prose-links);
+  color: var(--link);
 }
 
 .footnotes {
@@ -496,7 +474,7 @@ a {
 
 .footnotes hr {
   border: none;
-  border-top: 1px solid var(--prose-hr);
+  border-top: 1px solid var(--border-muted);
   margin-bottom: 1em;
 }
 
