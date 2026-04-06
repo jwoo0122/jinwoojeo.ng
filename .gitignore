@@ -8,3 +8,5 @@ node_modules/
 # Generated HTML (from convert.mjs)
 index.html
 posts/
+css/generated-fonts.css
+fonts/subset/

@@ -35,11 +35,11 @@ const MIME = {
 function convert() {
   const start = performance.now();
   try {
-    execSync('node convert.mjs --all', { stdio: 'pipe' });
+    execSync('node build.mjs', { stdio: 'pipe' });
     const ms = (performance.now() - start).toFixed(0);
-    console.log(`\x1b[32m✓\x1b[0m converted in ${ms}ms`);
+    console.log(`\x1b[32m✓\x1b[0m built in ${ms}ms`);
   } catch (e) {
-    console.error(`\x1b[31m✗\x1b[0m convert failed:\n${e.stderr?.toString() || e.message}`);
+    console.error(`\x1b[31m✗\x1b[0m build failed:\n${e.stderr?.toString() || e.message}`);
   }
 }
 

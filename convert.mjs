@@ -113,6 +113,7 @@ function renderPage({ title, description = '', url, content, extraHead = '', ext
   <meta property="twitter:url" content="${fullUrl}">
   <meta property="twitter:title" content="${titleEscaped}">
   <meta property="twitter:description" content="${descEscaped}">
+  <link rel="stylesheet" href="/css/generated-fonts.css">
   <link rel="stylesheet" href="/css/style.css">
 ${extraHead}  <script type="module" src="/js/components.js"></script>
   <script>
