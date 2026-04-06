@@ -16,7 +16,7 @@ export class SiteLayout extends HTMLElement {
         }
         .site-title {
           margin: 0 0 0.7rem 0;
-          font-weight: 700;
+          font-weight: 500;
         }
         a {
           color: inherit;
@@ -25,6 +25,7 @@ export class SiteLayout extends HTMLElement {
         .nav-link {
           margin: 0 0 0.85rem 0;
           color: var(--text-muted);
+          font-weight: 500;
         }
         .footer {
           margin-top: 4rem;
