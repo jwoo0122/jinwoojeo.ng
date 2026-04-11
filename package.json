@@ -6,8 +6,7 @@
   "scripts": {
     "build": "node build.mjs",
     "convert": "node convert.mjs --all",
-    "dev": "node dev.mjs",
-    "serve": "python3 -m http.server 4322"
+    "dev": "node dev.mjs"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
