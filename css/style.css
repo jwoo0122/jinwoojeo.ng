@@ -36,8 +36,8 @@ html {
   background-color: var(--bg);
   color: var(--text);
   font-family: "BareunBatang", serif;
-  line-height: 1.95rem;
-  font-size: 13.8pt;
+  font-size: 13.4pt;
+  line-height: 1.95;
   text-align: justify;
   font-weight: 300;
   -webkit-text-size-adjust: 100%;
