@@ -17,7 +17,6 @@ import subsetFont from 'subset-font';
 const GENERATED_POSTS_DIR = 'posts';
 const GENERATED_INDEX_FILE = 'index.html';
 const GENERATED_FONT_DIR = join('fonts', 'subset');
-const GENERATED_FONT_CSS = join('css', 'generated-fonts.css');
 
 const FONT_SOURCES = [
   { file: 'BareunBatangOTFPro-1.woff2', weight: 300 },
@@ -45,6 +44,14 @@ function cleanGeneratedContent() {
   if (existsSync(GENERATED_FONT_DIR)) {
     rmSync(GENERATED_FONT_DIR, { recursive: true, force: true });
   }
+  const cssDir = 'css';
+  if (existsSync(cssDir)) {
+    for (const entry of readdirSync(cssDir)) {
+      if (/^generated-fonts(\.[0-9a-f]+)?\.css$/.test(entry)) {
+        rmSync(join(cssDir, entry), { force: true });
+      }
+    }
+  }
 }
 
 function runContentBuild() {
@@ -56,7 +63,7 @@ function walkHtmlFiles(dir) {
     return [];
   }
 
-  const entries = readdirSync(dir);
+  const entries = readdirSync(dir).sort();
   const files = [];
 
   for (const entry of entries) {
@@ -148,8 +155,56 @@ async function generateSubsetFonts(text) {
     );
   }
 
-  writeFileSync(GENERATED_FONT_CSS, `${cssLines.join('\n')}\n`);
-  console.log(`  ✓ ${GENERATED_FONT_CSS}`);
+  const cssContent = `${cssLines.join('\n')}\n`;
+  const cssHash = createHash('sha256').update(Buffer.from(cssContent, 'utf8')).digest('hex').slice(0, 10);
+  const cssFileName = `generated-fonts.${cssHash}.css`;
+  const cssOutputPath = join('css', cssFileName);
+  writeFileSync(cssOutputPath, cssContent);
+  console.log(`  ✓ ${cssOutputPath}`);
+
+  return cssFileName;
+}
+
+function rewriteHtmlReferences(cssFileName) {
+  const hashedHref = `/css/${cssFileName}`;
+  const htmlFiles = [GENERATED_INDEX_FILE, ...walkHtmlFiles(GENERATED_POSTS_DIR)].filter(p => existsSync(p));
+  const pattern = /((?:href|src)\s*=\s*["'])\/css\/generated-fonts(?:\.[0-9a-f]+)?\.css(["'])/gi;
+  for (const filePath of htmlFiles) {
+    const original = readFileSync(filePath, 'utf8');
+    const rewritten = original.replace(pattern, `$1${hashedHref}$2`);
+    if (rewritten !== original) {
+      writeFileSync(filePath, rewritten);
+    }
+  }
+}
+
+function verifyNoBareRefs() {
+  const htmlFiles = [GENERATED_INDEX_FILE, ...walkHtmlFiles(GENERATED_POSTS_DIR)].filter(p => existsSync(p));
+  const barePattern = /(?:^|[^A-Za-z0-9._-])\/css\/generated-fonts\.css(?:[^A-Za-z0-9._-]|$)/g;
+  for (const filePath of htmlFiles) {
+    const content = readFileSync(filePath, 'utf8');
+    const matches = content.match(barePattern);
+    if (matches && matches.length > 0) {
+      throw new Error(`Bare /css/generated-fonts.css reference survived in ${filePath} (${matches.length} match(es))`);
+    }
+  }
+}
+
+function verifyExactlyOneHashedRef(cssFileName) {
+  const htmlFiles = [GENERATED_INDEX_FILE, ...walkHtmlFiles(GENERATED_POSTS_DIR)].filter(p => existsSync(p));
+  const needle = `href="/css/${cssFileName}"`;
+  for (const filePath of htmlFiles) {
+    const content = readFileSync(filePath, 'utf8');
+    let count = 0;
+    let idx = 0;
+    while ((idx = content.indexOf(needle, idx)) !== -1) {
+      count += 1;
+      idx += needle.length;
+    }
+    if (count !== 1) {
+      throw new Error(`Expected exactly one ${needle} in ${filePath}, found ${count}`);
+    }
+  }
 }
 
 async function main() {
@@ -160,7 +215,10 @@ async function main() {
   const glyphCount = [...text].length;
 
   console.log(`\nSubsetting fonts from ${glyphCount} unique characters...`);
-  await generateSubsetFonts(text);
+  const cssFileName = await generateSubsetFonts(text);
+  rewriteHtmlReferences(cssFileName);
+  verifyNoBareRefs();
+  verifyExactlyOneHashedRef(cssFileName);
 }
 
 main().catch((error) => {
