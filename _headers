@@ -3,8 +3,11 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
 
-/css/*
+/css/style.css
   Cache-Control: public, no-cache
+
+/css/generated-fonts.*.css
+  Cache-Control: public, max-age=31536000, immutable
 
 /js/*
   Cache-Control: public, no-cache

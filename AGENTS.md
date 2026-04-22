@@ -2,7 +2,7 @@
 
 ## Repo Notes
 
-- This repo is a root-output static site. Generated files are written to `index.html`, `posts/`, `fonts/subset/`, and `css/generated-fonts.css`.
+- This repo is a root-output static site. Generated files are written to `index.html`, `posts/`, `fonts/subset/`, and a content-hashed `css/generated-fonts.<hash>.css` (the 10-character hex hash changes whenever the CSS body changes).
 - Development entrypoints commonly used in this repo are `pnpm run build`, `node build.mjs`, `node convert.mjs --all`, `node dev.mjs`, and `npx wrangler`.
 - There is no active Vercel-specific setup in the local Claude config. Cloudflare Pages is the deployment target.
 
@@ -19,7 +19,7 @@ pnpm run build
 - extracts the text that actually appears in generated pages
 - subsets `BareunBatang` fonts from that text set
 - writes hashed subset font files into `fonts/subset/`
-- regenerates `css/generated-fonts.css` to point at the new subset files
+- regenerates a content-hashed `css/generated-fonts.<hash>.css` file and rewrites HTML `<link>` tags to point at it
 
 ## Cloudflare Pages
 
