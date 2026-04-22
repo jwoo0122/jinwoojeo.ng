@@ -1,3 +1,17 @@
+#!/bin/bash
+
+set -u
+
+ACTUAL="/Users/jinwoo/repos/jinwoojeo.ng/_headers"
+TMP_EXPECTED="$(mktemp "${TMPDIR:-/tmp}/verify-inc2.XXXXXX")" || exit 1
+
+cleanup() {
+  rm -f "$TMP_EXPECTED"
+}
+
+trap cleanup EXIT HUP INT TERM
+
+cat >"$TMP_EXPECTED" <<'EXPECTED'
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
@@ -20,3 +34,12 @@
 
 /*.ico
   Cache-Control: public, max-age=31536000, immutable
+EXPECTED
+
+if diff -u "$TMP_EXPECTED" "$ACTUAL"; then
+  echo "PASS"
+  exit 0
+fi
+
+echo "FAIL"
+exit 1
